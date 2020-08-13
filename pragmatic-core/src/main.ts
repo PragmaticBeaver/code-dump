@@ -1,48 +1,104 @@
 import { v4 as uuidv4 } from "uuid";
 
-export class EventBus {
-  private subscriptions: {
-    [topic: string]: {
-      [id: string]: (...args: []) => void;
-    };
-  };
+export interface EventToken {
+  Id: string;
+}
 
-  constructor() {
-    this.subscriptions = {};
+type EventCallback = (...args: []) => Promise<void>;
+
+type Events = {
+  [placeInOrder: number]: {
+    [Id: string]: EventCallback;
+  };
+};
+
+class Subscription {
+  private events: Events = {};
+  private idPosMap = new Map<string, number>();
+
+  public add(placeInOrder: number, cb: EventCallback): EventToken {
+    const id = uuidv4();
+    this.events[placeInOrder][id] = cb;
+
+    this.idPosMap.set(id, placeInOrder);
+
+    const token: EventToken = {
+      Id: id,
+    };
+    return token;
   }
+
+  public remove(token: EventToken): void {
+    const id = token.Id;
+    const placeInOrder = this.idPosMap.get(id);
+    const idNotFound = placeInOrder === undefined;
+    if (idNotFound) {
+      return;
+    }
+
+    const pos = placeInOrder as number;
+    delete this.events[pos][id];
+    this.idPosMap.delete(id);
+
+    const isEmpty = Object.keys(this.events[pos]).length === 0;
+    if (isEmpty) {
+      delete this.events[pos];
+    }
+  }
+
+  public async call(...args: []): Promise<void> {
+    const orderList = Object.keys(this.events);
+    for (const orderIndex of orderList) {
+      const placeInOrder = parseInt(orderIndex);
+      const cbsById = this.events[placeInOrder];
+      const ids = Object.keys(cbsById);
+      for (let j = 0; j < ids.length; j++) {
+        const id = ids[j];
+        await this.events[placeInOrder][id](...args);
+      }
+    }
+  }
+
+  public isEmpty(): boolean {
+    return Object.keys(this.events).length === 0;
+  }
+}
+
+type SubscriptionByTopic = {
+  [topic: string]: Subscription;
+};
+
+export class EventBus {
+  private subscriptions: SubscriptionByTopic = {};
 
   public subscribe(
     topic: string,
-    cb: (...args: []) => void,
-    busPosition = 500 // ToDo sort CBs by busPosition
-  ): string {
-    const id = uuidv4();
-    if (!this.subscriptions[topic]) {
-      this.subscriptions[topic] = {};
+    cb: EventCallback,
+    placeInOrder = 500
+  ): EventToken {
+    const topicUnknown = this.subscriptions[topic] === undefined;
+    if (topicUnknown) {
+      this.subscriptions[topic] = new Subscription();
     }
-    this.subscriptions[topic][id] = cb;
-    return id;
+    return this.subscriptions[topic].add(placeInOrder, cb);
   }
 
-  public unsubscribe(id: string): void {
+  public unsubscribe(token: EventToken): void {
     for (const topic in this.subscriptions) {
-      if (this.subscriptions[topic][id]) {
-        delete this.subscriptions[topic][id];
-        const isEmpty = Object.keys(this.subscriptions[topic]).length === 0;
-        if (isEmpty) {
-          delete this.subscriptions[topic];
-        }
+      this.subscriptions[topic].remove(token);
+
+      const noSubscriberLeft = this.subscriptions[topic].isEmpty();
+      if (noSubscriberLeft) {
+        delete this.subscriptions[topic];
       }
     }
   }
 
   public async publish(topic: string, ...args: []): Promise<void> {
-    if (!this.subscriptions[topic]) {
+    const subs = this.subscriptions[topic];
+    if (!subs) {
       return;
     }
-    const ids = Object.keys(this.subscriptions[topic]);
-    for (const id of ids) {
-      await this.subscriptions[topic][id](...args);
-    }
+    await subs.call(...args);
   }
 }
