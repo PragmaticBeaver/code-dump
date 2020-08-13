@@ -47,13 +47,9 @@ class Subscription {
   }
 
   public async call(...args: []): Promise<void> {
-    const orderList = Object.keys(this.events);
-    for (const orderIndex of orderList) {
+    for (const orderIndex in this.events) {
       const placeInOrder = parseInt(orderIndex);
-      const cbsById = this.events[placeInOrder];
-      const ids = Object.keys(cbsById);
-      for (let j = 0; j < ids.length; j++) {
-        const id = ids[j];
+      for (const id in this.events[placeInOrder]) {
         await this.events[placeInOrder][id](...args);
       }
     }
