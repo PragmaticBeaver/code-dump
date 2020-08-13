@@ -4,10 +4,10 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "build": "rimraf ./build && tsc",
+    "build": "rimraf ./dist && tsc",
     "start:dev": "nodemon",
-    "start": "yarn run build && node build/main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "yarn run build && node dist/main.js",
+    "test": "yarn run build && mocha dist/**/*.spec.js"
   },
   "author": "",
   "license": "ISC",
