@@ -28,7 +28,22 @@ describe("EventBus", async () => {
   });
 
   it("should only remove specified subscriber", async () => {
-    //
+    const sut = new EventBus();
+    const topic = "testTopic";
+
+    const token = sut.subscribe(topic, async () => {
+      throw new Error("i should not be called!");
+    });
+
+    let wasCalled = false;
+    sut.subscribe(topic, async () => {
+      wasCalled = true;
+    });
+
+    sut.unsubscribe(token);
+    await sut.publish(topic);
+
+    assert.isTrue(wasCalled);
   });
 
   it("should call subscriber callback", async () => {
