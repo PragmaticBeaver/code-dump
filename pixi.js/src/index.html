@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <title>pixi prototype</title>
   </head>
-  <body></body>
+  <script src="../node_modules/pixi.js/dist/pixi.min.js"></script>
+  <body>
+    <h1>Battle map prototype</h1>
+    <script type="text/javascript">
+      let type = "WebGL";
+      if (!PIXI.utils.isWebGLSupported()) {
+        type = "canvas";
+      }
+
+      PIXI.utils.sayHello(type);
+    </script>
+  </body>
+
   <footer>
-    <script type="module" src="./../dist/bundle.js"></script>
+    <!-- <script type="module" src="./../dist/bundle.js"></script> -->
+    <script src="main.js"></script>
   </footer>
 </html>
