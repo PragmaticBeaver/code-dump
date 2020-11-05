@@ -1,12 +1,22 @@
+// aliases
+const Application = PIXI.Application;
+const Loader = PIXI.Loader;
+const Sprite = PIXI.Sprite;
+
 let app;
 
-const battleImg = "assets/battle.jpg";
+const battleImgPath = "assets/battle.jpg";
+const iconImgPath = "assets/icon.png";
+
+const loaderShared = Loader.shared;
+
+function spawnBattlemap() {
+  const sprite = new Sprite(loaderShared.resources[battleImgPath].texture);
+  app.stage.addChild(sprite);
+}
 
 function loadImg() {
-  PIXI.loader.add(battleImg).load(() => {
-    const sprite = new PIXI.Sprite(PIXI.loader.resources[battleImg].texture);
-    app.stage.addChild(sprite);
-  });
+  loaderShared.add([battleImgPath, iconImgPath]).load(spawnBattlemap);
 }
 
 function resize(
@@ -18,7 +28,7 @@ function resize(
 }
 
 function init() {
-  app = new PIXI.Application({
+  app = new Application({
     width: 256,
     height: 256,
     antialias: true,
