@@ -15,13 +15,20 @@ function spawnBattlemap() {
   app.stage.addChild(sprite);
 }
 
-function loadImg() {
-  loaderShared.add([battleImgPath, iconImgPath]).load(spawnBattlemap);
+function readImgLib() {
+  console.log("====|> reading image-lib <|====");
+  loaderShared
+    .add([battleImgPath, iconImgPath])
+    .onProgress.add((loader, resource) => {
+      console.log(`loading ${resource.url}`);
+      console.log(`overall progress ${loader.progress}%`);
+    });
+  //(Note: If you ever need to reset the loader to load a new batch of files, call the loader's reset method: PIXI.loader.reset();)
 }
 
 function resize(
-  width = window.innerWidth / 2,
-  height = window.innerHeight / 2
+  width = window.innerWidth - 50,
+  height = window.innerHeight - 100
 ) {
   app.renderer.autoDensity = true;
   app.renderer.resize(width, height);
@@ -38,9 +45,10 @@ function init() {
 
   // Add the canvas that Pixi automatically created for you to the HTML document
   // must be present before any sprites can be shown
-  document.body.appendChild(app.view);
+  document.getElementById("pixi-area").appendChild(app.view);
 
-  loadImg();
+  readImgLib();
+  loaderShared.load(spawnBattlemap);
 }
 
 init();
