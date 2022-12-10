@@ -1,5 +1,6 @@
 import os
 from pydub import AudioSegment
+import logging
 
 # Set the target level for normalization (in dB)
 TARGET_LEVEL = 0
