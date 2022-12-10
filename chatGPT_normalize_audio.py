@@ -5,7 +5,7 @@ from pydub import AudioSegment
 TARGET_LEVEL = 0
 
 # Set the base directory for the audio files
-BASE_DIR = "./audio"
+BASE_DIR = "E:\Downloads\Music\Playlists"
 
 # Loop through all files and subdirectories in the base directory
 for root, dirs, files in os.walk(BASE_DIR):
