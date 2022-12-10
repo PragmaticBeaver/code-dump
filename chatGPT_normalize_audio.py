@@ -13,6 +13,7 @@ for root, dirs, files in os.walk(BASE_DIR):
     for file in files:
         # Check if the file is an audio file
         if file.endswith(".mp3") or file.endswith(".wav"):
+            logging.debug('file: %s' % file)
             # Load the audio file using pydub
             audio = AudioSegment.from_file(os.path.join(root, file))
 
