@@ -3,7 +3,7 @@ from pydub import AudioSegment
 import logging
 
 # Set the target level for normalization (in dB)
-TARGET_LEVEL = 0
+TARGET_LEVEL = -1
 
 # Set the base directory for the audio files
 BASE_DIR = "E:\Downloads\Music\Playlists"
@@ -13,7 +13,7 @@ for root, dirs, files in os.walk(BASE_DIR):
     for file in files:
         # Check if the file is an audio file
         if file.endswith(".mp3") or file.endswith(".wav"):
-            logging.debug('file: %s' % file)
+            print('file: %s' % file)
             # Load the audio file using pydub
             audio = AudioSegment.from_file(os.path.join(root, file))
 
