@@ -1,4 +1,5 @@
 import os
+import shutil
 from pydub import AudioSegment
 
 # Set the target level for normalization (in dB)
@@ -22,13 +23,16 @@ for root, dirs, files in os.walk(BASE_DIR):
             file_name = os.path.basename(file_path)
             file_ext = file_name.split('.')[-1]
             audio = AudioSegment.from_file(file_path, file_ext)
-            print(audio.dBFS)
+            gain = TARGET_LEVEL - audio.dBFS
+            print(f"changed gain by {gain}")
 
             # Normalize the audio using the target level
-            normalized_audio = audio.apply_gain(TARGET_LEVEL - audio.dBFS)
+            normalized_audio = audio.apply_gain(gain)
 
             # Save the normalized audio to a new file
-            normalized_audio.export(os.path.join(TARGET_DIR, file), format="mp3")
+            normalized_file_path = os.path.join(root, file)
+            normalized_audio.export(normalized_file_path, format="mp3")
+            shutil.move(normalized_file_path, TARGET_DIR)
 
 
 # This script uses the os and pydub modules to normalize audio files within a directory and its subdirectories.
