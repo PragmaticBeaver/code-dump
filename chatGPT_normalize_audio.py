@@ -29,9 +29,6 @@ for root, dirs, files in os.walk(BASE_DIR):
 
             # Save the normalized audio to a new file
             normalized_audio.export(os.path.join(TARGET_DIR, file), format="mp3")
-            
-            # delete old file
-            # os.remove(file_path)
 
 
 # This script uses the os and pydub modules to normalize audio files within a directory and its subdirectories.
