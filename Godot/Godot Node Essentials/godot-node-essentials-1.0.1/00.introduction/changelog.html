@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>changelog</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <style type="text/css">:root {--color-caption: grey;--color-blue: #26bfe3;--color-samp: #0084b8;--color-green: #02e180;--color-orange: #f2971a;--color-pink: #e3266f;--color-bg: #fff;--color-bg-alt: #f5f5f5;--color-text-header: #fff;--color-text-body: #95989a;--padding: 20px;--padding-inv: calc(-1 * var(--padding));--fonts: 'Open Sans', -apple-system, system-ui, 'Segoe UI', 'Roboto','Helvetica Neue', Arial, sans-serif;--font-size: 1.1rem;}html {font-size: 100%;}body {color: #444;font-family: var(--fonts);font-size: var(--font-size);line-height: 1.7;padding: 1em;margin: auto;max-width: 800px;background: #fefefe;}a {color: #0645ad;text-decoration: none;}a:visited {color: #0b0080;}a:hover {color: #06e;}a:active {color: #faa700;}a:focus {outline: thin dotted;}a::selection {background: rgba(255, 255, 0, 0.3);color: #0645ad;}*::selection {background: rgba(255, 255, 0, 0.3);color: #000;}p {margin: 1em 0;}header {display: none;}.caption {text-align: center;color: var(--color-caption);font-style: italic;}.note,.tips,.warning {display: block;width: calc(100% - var(--padding) * 2);padding: 0 var(--padding);padding-bottom: var(--padding);background-color: var(--color-bg-alt);}.note:before,.tips:before,.warning:before {display: block;margin: 0 var(--padding-inv) 10px var(--padding-inv);padding-left: var(--padding);font-style: bold;color: white;}.note:before {content: 'Note';background-color: var(--color-blue);}.tips:before {content: 'Tips';background-color: var(--color-pink);}.warning:before {content: 'Warning';background-color: var(--color-orange);}img {max-width: 100%;}h1,h2,h3,h4,h5,h6 {color: #111;line-height: 125%;margin-top: 2em;font-weight: normal;}h4,h5,h6 {font-weight: bold;}h1 {font-size: 2.5em;}h2 {font-size: 2em;}h3 {font-size: 1.5em;}h4 {font-size: 1.2em;}blockquote {color: #666666;margin: 0;padding-left: 3em;border-left: 0.5em #eee solid;}hr {display: block;height: 2px;border: 0;border-top: 1px solid #aaa;border-bottom: 1px solid #eee;margin: 1em 0;padding: 0;}pre,code,kbd,samp {color: var(--color-samp);font-family: monospace, monospace;}pre {padding: 1em;font-size: 14px;white-space: pre-wrap;word-wrap: break-word;}code {white-space: pre-wrap;}.sourceCode {color: inherit;}b,strong {font-weight: bold;}dfn {font-style: italic;color: var(--color-blue);}ins {background: #ff9;color: #000;text-decoration: none;}ul,ol {margin: 1em 0;padding: 0 0 0 2em;}li p:last-child {margin-bottom: 0;}ul ul,ol ol {margin: 0.3em 0;}dl {margin-bottom: 1em;}dt {font-weight: bold;margin-bottom: 0.8em;}dd {margin: 0 0 0.8em 2em;}dd:last-child {margin-bottom: 0;}img {border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;}figure {display: block;text-align: center;margin: 1em 0;}figure img {border: none;margin: 0 auto;}figcaption {font-size: 0.8em;font-style: italic;margin: 0 0 0.8em;}.author {font-size: 1.2em;text-align: center;}tag {min-width: 3.2em;text-align: center;border-radius: 8px;padding: 0 4px;margin-bottom: 0;margin-top: 4px;margin-right: 0.2em;display: inline-block;color: white;}tag.update {background: var(--color-blue);}tag.new {background: var(--color-green);}tag.update:after {content: 'update';}tag.new:after {content: 'new';}button {background-color: var(--color-blue);color: white;border: none;cursor: pointer;line-height: 2rem;font-size: 1.2rem;margin: 0.75rem 0;overflow: visible;padding: 0.75rem 1.5rem;border-radius: 1rem;transition: background-color 0.5;white-space: nowrap;}.video-youtube {background-color: #000;position: relative;cursor: pointer;}.video-youtube > .playbutton {pointer-events: none;width: 90px;height: 60px;background-color: #333;box-shadow: 0 0 18px rgba(0, 0, 0, 0.6);z-index: 1;opacity: 0.8;border-radius: 6px;}.playbutton:before {content: '';border-style: solid;border-width: 15px 0 15px 26px;border-color: transparent transparent transparent #fff;}.video-youtube > img,.video-youtube > .playbutton {cursor: pointer;}.video-youtube > img,.video-youtube > .playbutton,.video-youtube > .playbutton:before {position: absolute;}.playbutton,.playbutton:before {top: 50%;left: 50%;transform: translate3d(-50%, -50%, 0);}.godot-icon-class {white-space: nowrap;}</style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">changelog</h1>
+</header>
+<h1 id="changelog">Changelog</h1>
+<p>This document details all the new features, improvements, and fixes
+we made with each release of Godot node essentials.</p>
+<h2 id="godot-node-essentials-1.0.1">Godot Node Essentials 1.0.1</h2>
+<p><em>Released on 2022/07/12</em></p>
+<h3 id="content-changes">Content changes</h3>
+<ul>
+<li>Improve wording in Navigation</li>
+<li>Improve wording in Navigation2D</li>
+<li>Improve wording in NinePatchRect</li>
+<li>Improve wording in OptionButton</li>
+<li>Improve wording in PanelContainer</li>
+<li>Improve wording in Particles2D</li>
+<li>Improve wording in Path</li>
+<li>Improve wording in Path2D</li>
+<li>Improve wording in ProgressBar</li>
+<li>Improve wording in RayCast</li>
+<li>Improve wording in RayCast2D</li>
+<li>Improve wording in RemoteTransform</li>
+<li>Improve wording in RemoteTransform2D</li>
+<li>Improve wording in RichTextLabel</li>
+<li>Improve wording in RigidBody</li>
+<li>Improve wording in RigidBody2D</li>
+<li>Improve wording in TileMap</li>
+<li>Improve wording in Timer</li>
+<li>Improve wording in Tween</li>
+<li>Improve wording in Viewport</li>
+<li>Improve wording in VisibilityNotifier</li>
+<li>Improve wording in VisibilityNotifier2D</li>
+<li>Update comment in RigidPlayer2D.gd</li>
+</ul>
+<h3 id="bug-fixes">Bug fixes</h3>
+<ul>
+<li>Make links work on Mavenseed platform</li>
+</ul>
+<h2 id="godot-node-essentials-1.0.0">Godot Node Essentials 1.0.0</h2>
+<p><em>Released on 2022/06/16</em></p>
+<h3 id="new-features">New features</h3>
+<ul>
+<li>Add VisibilityNotifier2D guide (#126)</li>
+<li>Update zipline demo to not be obscured by ui and add a hang
+animation</li>
+<li>Add new 3d models for platform, sign, credits, chest</li>
+<li>Add new 3d models for blaster, flashlight, skateboard, turret</li>
+<li>Add new 3d models and FX for black hole and turret</li>
+<li>Add new 3d models for pressure plate, shattered crate, grenade,
+door</li>
+<li>Add MeshInstance demos scenes (#128)</li>
+</ul>
+<h3 id="content-changes-1">Content changes</h3>
+<ul>
+<li>Rewrite the Area2D guide’s Hitbox section, add pictures</li>
+<li>Improve the phrasing in some unclear translation strings</li>
+<li>Rewrite RTS optimization example to make it clearer</li>
+<li>Simplify how to change the root viewport resolution</li>
+<li>Improve wording in AnimationPlayer</li>
+<li>Improve wording in Area</li>
+<li>Improve wording in Area2D</li>
+<li>Improve wording in AudioStreamPlayer</li>
+<li>Improve wording in Button</li>
+<li>Improve wording in Camera2D</li>
+<li>Improve wording in HBoxContainer</li>
+<li>Improve wording in KinematicBody2D</li>
+<li>Improve wording in Line2D</li>
+<li>Improve wording in LineEdit</li>
+<li>Improve wording in Navigation2D</li>
+<li>Improve wording in NinePatchRect</li>
+<li>Improve wording in OptionButton</li>
+<li>Improve wording in PanelContainer</li>
+<li>Improve wording in Path2D</li>
+<li>Improve wording in ProgressBar</li>
+<li>Improve wording in RayCast2D</li>
+<li>Improve wording in RemoteTransform2D</li>
+<li>Improve wording in RigidBody2D</li>
+<li>Improve wording in TileMap</li>
+<li>Improve wording in Tween</li>
+<li>Improve wording in Viewport</li>
+<li>Improve wording in GridMap guide</li>
+<li>Camera text and formatting update</li>
+<li>Fix broken link in RigidBody guide</li>
+<li>Add missing links to guides in RigidBody2D</li>
+<li>Add missing code listing in Viewport guide</li>
+<li>Add missing code listing in PanelContainer guide</li>
+</ul>
+<h3 id="improvements">Improvements</h3>
+<ul>
+<li>Add reticle in PositionalSound3D scene</li>
+<li>Toned down 3d enemy particles</li>
+<li>Made flashlight controls toggle accurately</li>
+<li>Cover exporting to glTF for Godot v3.4 in CSG guide</li>
+<li>Update pictures in remoteTransform2D guide</li>
+<li>Update button focus color for readability</li>
+<li>Tune movement in KinematicVsRigidBody3D demo so character movement
+matches more closely</li>
+<li>Improve RigidBody2D visuals with sidescroll tileset</li>
+<li>Make demo list scroll when navigating with arrow keys</li>
+<li>Improve main menu navigation with the keyboard</li>
+<li>Clicking the gdquest logo opens the gdquest website</li>
+<li>Register all new covered nodes to menu filter categories</li>
+<li>Restore last selected item when going back to main menu</li>
+<li>Complete enemy node list node in Navigation2D guide</li>
+</ul>
+<h3 id="bug-fixes-1">Bug fixes</h3>
+<ul>
+<li>Port skateboarding demo to Godot Physics</li>
+<li>Fix incorrect node path in PortableRadio scene</li>
+<li>Make boxes sleep by default in CrateBox to avoid jitter</li>
+<li>Remove ability to restart the push animation while it’s playing in
+SpringAnimation3D scene</li>
+<li>Replace incorrect YouTube video link in AnimationPlayer guide</li>
+<li>Missing or misnamed CSV strings (#130)</li>
+<li>Fix some top messages not appearing for some demo screens</li>
+<li>Fix controls covering the ProgressBar scene UI</li>
+<li>Remove RigidBody Ragdoll3D screen</li>
+<li>Update imports to include 3.4 defaults (#132)</li>
+<li>Wrap spaceship position to prevent it from leaving the screen</li>
+<li>Use DRAG constant instead of hard-coded value in Coin.gd</li>
+<li>Add missing “{” to include shortcode in AnimationPlayer guide</li>
+<li>Update and add controls to many demo scenes</li>
+<li>Spikes now kill players in visiblitiynotifier2d</li>
+<li>Fix viewport weapon error when pressing “interact”</li>
+<li>Animate player in 2D step sound demo when moving vertically</li>
+<li>Make mouse input pass through the mini-map in MapView demo</li>
+<li>Fix slowdown in DopplerEffect due to Projectile using a high-density
+CollisionShape</li>
+<li>Properly remove tweens in NavigationLine demo</li>
+<li>Update doppler turret collisions and remove tween</li>
+<li>Increase wall height in KinematicVsRigidBody3D demo so walls are
+high enough to stop escape</li>
+<li>Fix astronaut sometimes playing fall animation when on the
+floor</li>
+<li>Fix visual bugs in CSGBox demos</li>
+<li>Ogg looping issues and wrong dialogue start (#137)</li>
+<li>Correct typo in Area2D code listing</li>
+<li>Fix broken link to Godot docs GUI skinning page</li>
+</ul>
+<h2 id="godot-node-essentials-release-0.7.0">Godot Node Essentials
+release 0.7.0</h2>
+<p><em>Released on 2021/11/30</em></p>
+<p>We had to change the 3D physics engine to Godot Physics instead of
+Bullet, the default one. There’s a known issue with Bullet physics and
+the GridMap node that causes bumps when walking around levels.</p>
+<p>Changing physics engine affects the behavior of physics nodes, so
+please let us know if you find any issue or edge case in the existing
+demos.</p>
+<p>A difference we noted is Godot Physics is much more sensitive to
+property changes than Bullet. Also, applying bounce to rigid bodies made
+them shake.</p>
+<h3 id="new-features-1">New features</h3>
+<ul>
+<li>Add VisibilityNotifier guide</li>
+<li>Add RayCast guide</li>
+<li>Add CSG guide</li>
+<li>Add Light guide</li>
+<li>Add 3D KinematicBody guide</li>
+<li>Add 3D Navigation guide with 3 demos</li>
+<li>Write 3D Camera guide and add Camera demos</li>
+<li>Write the 3D RigidBody guide</li>
+<li>Add Particles2D guide</li>
+<li>Add three 3D VisibilityNotifier demos</li>
+<li>Add two 3D CSG demos</li>
+<li>Add Gravity planet 3D demo</li>
+<li>Redesign 3D maps in Animationplayer, AudioStreamPlayer,
+RemoteTransform</li>
+<li>Design nice scene and add animated player to Navigation demos</li>
+<li>Improve levels of RayCast and VisiblityNotifier demos</li>
+<li>Write algorithm to generate collision boxes from gridmap</li>
+</ul>
+<h3 id="improvements-1">Improvements</h3>
+<ul>
+<li>Make gridmap work with player, draw background for 3 demos</li>
+<li>Improve default 3D environment</li>
+<li>Use single curve for RailGrind demo</li>
+<li>Redesign walljump scene, add astronaut animations</li>
+<li>Make 3D camera work as a child of the player node</li>
+<li>Adapt RigidBody demos to Godot Physics engine</li>
+<li>Add link to our Discord server to ask questions</li>
+<li>Play fall animation when walking off ledges</li>
+<li>Simplify LaserBeam3D code</li>
+<li>Add pictures to the roadmap</li>
+<li>Redesign PushRigidBodies3D scene</li>
+<li>Give nodes more search terms: searching omni keeps “Lights”</li>
+<li>Rewrite introduction, reorder pages, add pictures and video</li>
+<li>Improve phrasing in Area guide, add four pictures</li>
+<li>Remove unnecessary setter function in PathfindingWithPath2D</li>
+<li>Improve phrasing and code in KinematicBody guide</li>
+<li>Improve phrasing in the Area guide</li>
+<li>Improve phrasing and fix typos in CanvasLayer</li>
+<li>Improve phrasing and fix typos in KinematicBody2D</li>
+<li>Improve phrasing and fix typos in RayCast2D</li>
+<li>Improve phrasing and fix typos in RemoteTransform2D</li>
+<li>Improve phrasing and fix typos in RichTextLabel</li>
+<li>Improve phrasing and fix typos in RigidBody2D</li>
+<li>Improve phrasing and fix typos in Timer</li>
+<li>Improve phrasing and fix typos in Viewport</li>
+<li>Improve phrasing in RayCast2D</li>
+<li>Improve phrasing in Viewport</li>
+<li>Minor improvements to both navigation and visibility notifier
+guides</li>
+<li>Updated PlatformOnPath demo to allow player to jump and stick to
+platform</li>
+<li>Add new 3D enemy model</li>
+<li>Remake TileMap and GridMap foot step audio demo screens</li>
+<li>Improve graphics in kinematic FPS demo</li>
+</ul>
+<h3 id="bug-fixes-2">Bug fixes</h3>
+<ul>
+<li>Use single curve for RailGrind demo</li>
+<li>Make demo buttons capture mouse input</li>
+<li>Fix link to cheatsheet in the offline version</li>
+<li>Change shattered box to use box colliders for performance with Godot
+Physics</li>
+<li>Restore ability to hit ragdolls in ragdoll demo</li>
+<li>Fix camera not rotating in some FPS demos with the mouse
+confined</li>
+<li>Fix view not moving in some FPS view demos</li>
+<li>Remove debug drawing of raycasts in FPS view</li>
+<li>Fix multiple raycast turret not detecting player anymore</li>
+<li>Fix error about nonexistent lights icon</li>
+<li>Run formatter and compress images on VisiblityNotifier guide</li>
+<li>Avoid normalization error on orientation by disabling physics
+processing in ready</li>
+<li>Fix a RayCast issue in AnimationPlayer demos</li>
+<li>Add missing call to queue_free() in 3D bomb scene</li>
+<li>Cannon only fires if mouse is captured now</li>
+<li>Grenade launcher only fires if mouse is captured</li>
+<li>Fix remote transform camera scene by allowing Player3D to use
+external camera</li>
+<li>Correct enemy orientation and stop unwanted hopping behaviour</li>
+<li>Add player model to edge detect and improve look of ledge grab
+scene</li>
+<li>Add type hints to variables missing types for consistency</li>
+<li>Change player to KinematicBody to work with Godot Physics</li>
+<li>Small fixes in GridMap guide</li>
+<li>Small fixes for RemoteTransform guide</li>
+<li>Small fixes in AudioStreamPlayer guide</li>
+</ul>
+<h2 id="godot-node-essentials-release-0.6.0">Godot Node Essentials
+release 0.6.0</h2>
+<h3 id="new-features-2">New features</h3>
+<ul>
+<li>Add RemoteTransform demo screens and guide</li>
+<li>Add 3D light demos</li>
+<li>Add 3D FPS screen</li>
+<li>Add 3D RigidBody demos</li>
+<li>Add five 3D Path demos and guide</li>
+<li>Add 3D Navigation demos</li>
+<li>Add box selection demo and section to Area2D</li>
+<li>Add VisibilityNotifier2D demos</li>
+<li>Add 3D security camera AudioStreamPlayer demo and guide</li>
+<li>Add 3D doppler effect AudioStreamPlayer demo and guide</li>
+<li>Add 3D speaker emission angle AudioStreamPlayer demo and guide</li>
+<li>Add 3D step sounds depending on terrain AudioStreamPlayer demo</li>
+<li>Add 3D RayCast demo of AI vision with many ray casts and area
+check</li>
+<li>Add 3D CollectibleUI Tween demo and guide</li>
+<li>Add 3D SpringAnimation Tween demo and guide</li>
+<li>Add 3D card hand Tween demo and guide</li>
+<li>Add probabilistic tiles generation TileMap demo and guide</li>
+<li>Add building on a grid TileMap demo and guide</li>
+<li>Add 2D step sounds depending on floor TileMap demo</li>
+<li>Add 3D gun reload demo and guide to AnimationPlayer</li>
+<li>Add 3D mesh highlight demo and guide to AnimationPlayer</li>
+<li>Add grid-based Navigation 3D demo</li>
+<li>Add enemy following the player 3D Navigation demo</li>
+<li>Add 3D Navigation demo with toggling doors</li>
+<li>Add GridMap building placement demo</li>
+<li>Add GridMap probabilistic cells demo</li>
+<li>Add GridMap 3D autotile demo</li>
+<li>Write GridMap node guide</li>
+</ul>
+<h3 id="improvements-2">Improvements</h3>
+<ul>
+<li>Add debug visualization for RayCast and Path nodes</li>
+<li>Add 3D environment grid map</li>
+<li>Add animated 3D astronaut character with:
+<ul>
+<li>Add ledge grab animation to Astronaut</li>
+<li>Add Astronaut attack mechanic and animation</li>
+</ul></li>
+<li>Refactor and clarify FireLaserOnTarget example</li>
+<li>Add link to RemoteTransform2D guide in Path2D guide</li>
+<li>Split the long pathfinding code section into shorter and clearer
+parts in Path2D guide</li>
+<li>Allow moving the ship anytime in NavigationLine demo</li>
+<li>Improve Line2D guide’s wording, remove most future tense</li>
+<li>Add three pictures to the Line2D guide</li>
+<li>Improve phrasing and add two pictures to the TileMap guide</li>
+<li>Explain what the ShortCut resource is in ProgressBar guide</li>
+<li>Improve phrasing in OptionButton</li>
+<li>Use range lerp to calculate 3D ray cast rotation</li>
+<li>Add raycast debug drawing to two screens</li>
+<li>Make the panning sound relative to the center in audio demo</li>
+<li>Improve phrasing in AudioStreamPlayer guide</li>
+<li>Improve the wording of the HBoxContainer guide, add images</li>
+<li>Add attack icon in JRPGActionList</li>
+<li>Restore visible mouse mode when moving back to main menu</li>
+<li>Remove future tense in PanelContainer, add image</li>
+<li>Update AnimationPlayer code blocks</li>
+<li>Add nicer styleboxes to EmailPassword demo</li>
+<li>Make the form field turn red when typing an incomplete email in
+LoginPanel demo</li>
+<li>Simplify the code and explanations for character name demo</li>
+<li>Add astronaut to KinematicBody demos, make character faster</li>
+<li>Add collision box to sign in Area demos</li>
+<li>Add circular player attack to HurtBox demo</li>
+<li>Improve phrasing in the RemoteTransform guide</li>
+</ul>
+<h3 id="bug-fixes-3">Bug fixes</h3>
+<ul>
+<li>Fix UI element overlapping with next screen during transition in
+Path2D</li>
+<li>Fix slider label overlapping with controls panel in Path2D</li>
+<li>Make debug paths draw behind their parent</li>
+<li>Fix Path2D drawings not hiding when turning off debug drawing</li>
+<li>Fix debug drawing not resetting in two Path2D screens</li>
+<li>Correct the heading level for two demos in Path2D guide</li>
+<li>Limit the speed of the golf ball in Line2D demo</li>
+<li>Fix clicking fast causing the ship to follow the same path in 2D
+navigation demo</li>
+<li>Remove outdated control instructions in demo top labels</li>
+<li>Fix sound playing for too long in audio dialogue demos</li>
+<li>Lower the volume of jump sound effects</li>
+<li>Fix character flickering in corners in side-scrolling screens</li>
+<li>Fix HBoxContainer demos not being centered, simplify code</li>
+<li>Fix markdown errors in RemoteTransform.md</li>
+</ul>
+<h2 id="godot-node-essentials-0.5.0">Godot Node Essentials 0.5.0</h2>
+<p><em>Released on 2021/08/21</em></p>
+<h3 id="new-features-3">New features</h3>
+<ul>
+<li>Area guide</li>
+</ul>
+<h3 id="improvements-3">Improvements</h3>
+<ul>
+<li>Improve Area demo colors</li>
+<li>Improve wording in Line2D guide</li>
+<li>Use colors from a fixed palette in PolygonOutline demo</li>
+<li>Make bullets faster and behind the ship in BulletTrails demo</li>
+<li>Improve wording in NinePatchRect guide</li>
+<li>Remap shoot key to Ctrl</li>
+<li>Center nodes in NinePatchRect demos</li>
+<li>Add missing type hints in Main and addons folders</li>
+<li>Add type hints in four guides</li>
+<li>Add type hints to a couple dozen scripts</li>
+<li>Improve wording and remove passive voices in Button guide</li>
+<li>Improve LineEdit guide wording, remove passive voices</li>
+<li>Add new troubleshooting point to Button guide</li>
+<li>Shorten the intro in Path2D, add link to learn Bezier</li>
+<li>Try to animate the button scaling back up in AnimatedButton</li>
+<li>Set the default weapon to Rocket in WeaponSelect demo</li>
+<li>Add controls to Button demos</li>
+</ul>
+<h3 id="bug-fixes-4">Bug fixes</h3>
+<ul>
+<li>Fix some class names missing from node guides</li>
+<li>Fix error in PoppingUI after resetting the demo</li>
+<li>Fix minor formatting issues in Area guide</li>
+<li>Fix elements outside the view in two NinePatchRect demos</li>
+<li>Correct two typos in Button guide</li>
+<li>Remove three template comments in the project</li>
+<li>Fix table of contents not appearing in LineEdit guide</li>
+<li>Fix list rendering as paragraph in LineEdit</li>
+<li>Make button grab focus in AnimatedButton demo</li>
+</ul>
+<h2 id="godot-node-essentials-0.4.1">Godot Node Essentials 0.4.1</h2>
+<p><em>Released on 2021/08/20</em></p>
+<h3 id="improvements-4">Improvements</h3>
+<ul>
+<li>Add controls to Navigation2D demos</li>
+<li>Make writing more accessible in Navigation2D</li>
+</ul>
+<h3 id="bug-fixes-5">Bug fixes</h3>
+<ul>
+<li>Fix Navigation2D demos not loading</li>
+<li>Remove duplicate UI scenes from Navigation2D</li>
+<li>Fix previous screens not disappearing when moving two or more
+screens forward quickly</li>
+<li>Fix error messages when trying to disconnect nonexistent signal when
+moving quickly</li>
+<li>Fix broken link to RayCast2D in Line2D on Mavenseed</li>
+<li>Remove incorrect statement about CanvasLayer and screenshots</li>
+<li>Add missing word resource in NinePatchRect guide</li>
+</ul>
+<h2 id="godot-node-essentials-0.4.0">Godot Node Essentials 0.4.0</h2>
+<p><em>Released on 2021/08/18</em></p>
+<h3 id="new-features-4">New features</h3>
+<ul>
+<li>2D and 3D Raycast debug drawing</li>
+<li>RigidBody2D delaunay triangulation demo and guide</li>
+<li>Particles2D demos</li>
+<li>Quit and help buttons to main menu</li>
+<li>Toggle the demo’s interface with F12</li>
+</ul>
+<h3 id="improvements-5">Improvements</h3>
+<ul>
+<li>Use OS representation of scancodes for input</li>
+<li>Automatically add debug drawing based on node groups</li>
+<li>Use a better color palette, more consistent and better for
+color-blind people</li>
+<li>Hide debug button if there’s nothing to draw in screen</li>
+<li>Animate the ray cast and separate it from turret in
+LineOfSight3D</li>
+<li>Make writing more accessible in PanelContainer</li>
+<li>Center cards on the screen in PanelContainer</li>
+<li>Center drag-and-drop inventory on the screen in PanelContainer</li>
+</ul>
+<h3 id="bug-fixes-6">Bug fixes</h3>
+<ul>
+<li>Registered missing TileMap demo scene file and translation
+strings</li>
+<li>Registered missing PanelContainer and MarginContainer demo</li>
+<li>Fix pressing enter at the start leading to an empty scene</li>
+<li>Fix nonexistent property on DebugDrawCollisionShape2D</li>
+<li>Fix PlayerSideScroll not playing jump animation</li>
+<li>Fix path to PaintCursorTexture resource</li>
+<li>Fix reset button not resetting debug drawing</li>
+<li>Fix blinking screen when changing screen in slide-based demos</li>
+<li>Fix broken texture dependency in LaserSight3D</li>
+<li>Fix error with nonexistent label instance when resetting a scene
+twice</li>
+<li>Corrected typos and removed duplicate text in the TileMap guide</li>
+<li>Fix typos, improve wording, and changed demos order in
+ProgressBar</li>
+</ul>
+<h2 id="godot-node-essentials-0.3.0">Godot Node Essentials 0.3.0</h2>
+<p><em>Released on 2021/08/12</em></p>
+<p>This release makes some important fixes and brings the raycast
+demos.</p>
+<h3 id="new-demos">new demos</h3>
+<ul>
+<li>3D raycast demos</li>
+</ul>
+<h3 id="improvements-6">Improvements</h3>
+<ul>
+<li>Line2d guide wording</li>
+<li>Add formatting to panelcontainer</li>
+</ul>
+<h3 id="bug-fixes-7">Bug fixes</h3>
+<ul>
+<li>Code not displaying as code blocks in panelcontainer</li>
+</ul>
+<h2 id="godot-node-essentials-0.2.0">Godot Node Essentials 0.2.0</h2>
+<p><em>Released on 2021/08/09</em></p>
+<p>This release brings 11 new node essentials guides, with a focus on
+UI.</p>
+<p>As Godot offers many nodes that are similar or that work only in
+pairs, we sometimes cover two or more in a single guide.</p>
+<p>On top of the roadmap’s plan, we added a couple more 2D nodes we find
+really useful.</p>
+<p>The next milestone will focus on 3D and mark the end of early
+access.</p>
+<h3 id="new-guides-and-demos">New guides and demos</h3>
+<p>The new guides cover a total of 15 nodes:</p>
+<ol type="1">
+<li>AudioStreamPlayer</li>
+<li>Button</li>
+<li>HBoxContainer and VBoxContainer</li>
+<li>Line2D</li>
+<li>LineEdit</li>
+<li>NinePatchRect</li>
+<li>OptionButton</li>
+<li>PanelContainer</li>
+<li>Path2D and PathFollow2D</li>
+<li>ProgressBar and TextureProgress</li>
+<li>TileMap</li>
+<li>Navigation2D</li>
+</ol>
+<h3 id="new-demos-1">New demos</h3>
+<p>We started working on 3D, and while the corresponding guides aren’t
+available, you can already enjoy two prototypes of upcoming 3D node
+guides:</p>
+<ol type="1">
+<li>Area</li>
+<li>KinematicBody</li>
+</ol>
+<p>With many more to come.</p>
+<h3 id="improvements-7">Improvements</h3>
+<ul>
+<li>New title screen design with:
+<ul>
+<li>New graphics</li>
+<li>Node icons</li>
+<li>Improved search with category filters</li>
+</ul></li>
+<li>Controls panel inside demos. Press <kbd>Tab</kbd> to toggle its
+visibility</li>
+<li>New and improved graphics for
+<ul>
+<li>AnimationPlayer</li>
+<li>KinematicBody2D</li>
+<li>RayCast2D</li>
+<li>RemoteTransform2D</li>
+<li>RichTextLabel</li>
+<li>RigidBody2D</li>
+<li>Disabled buttons</li>
+</ul></li>
+<li>The demos’ heads-up display now has smaller buttons</li>
+<li>The mouse is confined to the game window by default. Press
+<kbd>Esc</kbd> to free it and click on the game window to lock it
+again</li>
+<li>Demo screens now load on demand</li>
+<li>Add crash prevention note to Timer.md</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Improve the look of the RichTextLabel tooltip demo</li>
+<li>Add license for the guides</li>
+<li>Add new input actions for more descriptive controls</li>
+</ul>
+<h3 id="bug-fixes-8">Bug fixes</h3>
+<ul>
+<li>Fix typo in changelog</li>
+<li>Fix wrong loading path for the asteroid texture</li>
+<li>Fix button overlap in NameTags</li>
+<li>Fix ability buttons not centered in AbilityCooldown</li>
+<li>Fix accidentally exiting to main menu in DeathAnimation</li>
+<li>Fix accidentally exiting to main menu in TransitionAnimation</li>
+<li>Fix player unable to move after explosion in DeathAnimation</li>
+<li>Fix player not hitting a target without moving in HitScan and
+LaserSight</li>
+<li>Fix possible crash in DynamicTimer</li>
+<li>Fix map not showing in MapView</li>
+<li>Fix Button.md referencing incorrect airstrike.gd</li>
+<li>Fix build mode button fixed the bottom edge of the window</li>
+<li>Fix cheatsheet cards width too small when the description was
+short</li>
+</ul>
+<h2 id="godot-node-essentials-0.1.1">Godot Node Essentials 0.1.1</h2>
+<p><em>Released on 2021/07/17</em></p>
+<p>Updates:</p>
+<ul>
+<li>KinematicBody2D demos are now laid down in a grid in the Godot
+editor.</li>
+</ul>
+<p>Fixes:</p>
+<ul>
+<li>Fix an incomplete code include template in
+<code>KinematicBody2D.md</code>.</li>
+<li>Fix Godot view being cropped on displays with a resolution lower
+than <code>1920x1080</code>.</li>
+<li>Fix monster could be killed from the side in the stomp demo.</li>
+</ul>
+<h2 id="godot-node-essentials-0.1.0">Godot Node Essentials 0.1.0</h2>
+<p><em>Released on 2021/07/16</em></p>
+<p>This first early access release brings 13 node guides, their Godot
+demos, and the first version of the node cheatsheet.</p>
+<p>The first 13 nodes in this release are:</p>
+<ol type="1">
+<li>AnimationPlayer</li>
+<li>Area2D</li>
+<li>Camera2D</li>
+<li>CanvasLayer</li>
+<li>KinematicBody2D</li>
+<li>Label</li>
+<li>RayCast2D</li>
+<li>RemoteTransform2D</li>
+<li>RichTextLabel</li>
+<li>RigidBody2D</li>
+<li>Timer</li>
+<li>Tween</li>
+<li>Viewport</li>
+</ol>
+<p>You can see all upcoming node guides and planned releases in the <a href="../roadmap">roadmap</a>.</p>
+</body>
+</html>

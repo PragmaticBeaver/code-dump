@@ -1,0 +1,1287 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Godot Node Essentials cheatsheet</title>
+  <meta name="description" content="A cheatsheet to learn Godot's nodes faster than ever!">
+  <meta name="author" content="GDQuest">
+
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <style>
+  :root {
+  --fonts: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans,
+    Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --color-link: #67c2ff;
+  --color-link-hover: #7ed5fd;
+  --color-blue: #007ac3;
+  --color-blue-lighter: #56a9ff;
+  --color-red: #e00b0b;
+  --color-red-lighter: #ec2222;
+  --color-green: #21bd43;
+  --color-green-lighter: #42e064;
+  --color-grey: #777b7e;
+  --color-grey-lighter: #a8abad;
+
+  --spacing-micro: 0.15rem;
+  --spacing-tiny: 0.35rem;
+  --spacing-small: 0.5rem;
+  --spacing-normal: 1rem;
+
+  --border-radius: 0.25rem;
+
+  --container-width: 900px;
+
+  --shadow-slight: 0 2px 2px rgba(0, 0, 0, 0.2);
+
+  --shadow-overlay: 4px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+body {
+  font-family: var(--fonts);
+  overflow-x: hidden;
+}
+
+.content-container {
+  display: block;
+  padding: var(--spacing-normal);
+  margin: 0 auto;
+  max-width: var(--container-width);
+}
+
+.filter-label {
+  font-weight: bold;
+}
+
+.genres-summary {
+  color: var(--color-link);
+  cursor: pointer;
+  margin-bottom: var(--spacing-small);
+}
+.genres-summary:hover {
+  color: var(--color-link-hover);
+}
+.genres-summary::marker {
+  color: white;
+}
+
+.pills-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.pills-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tag-pill {
+  display: inline;
+  padding: var(--spacing-micro) var(--spacing-tiny);
+  margin-right: var(--spacing-tiny);
+  margin-bottom: var(--spacing-tiny);
+  border-radius: var(--border-radius);
+  max-height: 1.4em;
+
+  font-size: 0.9em;
+  font-weight: 500;
+
+  color: white;
+  background: var(--color-blue);
+
+  cursor: pointer;
+}
+.tag-pill.-twodimensional {
+  background: var(--color-blue);
+}
+.tag-pill.-general {
+  background: var(--color-grey);
+}
+.tag-pill.-threedimensional {
+  background: var(--color-red);
+}
+.tag-pill.-ui {
+  background: var(--color-green);
+}
+.tag-pill.-floatright {
+  float: right;
+}
+
+.node-card {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  max-width: 420px;
+  width: 100%;
+  min-height: 200px;
+  border-radius: 10px;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(to bottom, #323232 0%, #3f3f3f 40%, #1c1c1c 150%),
+    linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(0, 0, 0, 0.25) 200%
+    );
+  background-blend-mode: multiply;
+}
+.node-card > h2 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-normal);
+}
+.node-card > h3 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-small);
+}
+.node-card > ul {
+  margin-top: var(--spacing-micro);
+  margin-bottom: var(--spacing-normal);
+}
+
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.tag-selector {
+  display: none;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  
+}
+
+.filter-button {
+  --bg1: var(--color-blue);
+  --bg2: var(--color-blue-lighter);
+  --fg1: white;
+  --fg2: black;
+  --shadow: var(--shadow-slight);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-small) var(--spacing-normal);
+
+  margin-bottom: var(--spacing-small);
+  margin-right: var(--spacing-small);
+
+  line-height: normal;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+
+  cursor: pointer;
+
+  color: white;
+  background-color: var(--bg1);
+  border: none;
+  box-shadow: var(--shadow);
+}
+.radio-button.two_dimensional {
+  --bg1: var(--color-blue);
+  --bg2: var(--color-blue-lighter);
+}
+.radio-button.three_dimensional {
+  --bg1: var(--color-red);
+  --bg2: var(--color-red-lighter);
+}
+.radio-button.ui {
+  --bg1: var(--color-green);
+  --bg2: var(--color-green-lighter);
+}
+.radio-button.general {
+  --bg1: var(--color-grey);
+  --bg2: var(--color-grey-lighter);
+}
+
+.filter-titles .filter-button {
+  --bg1: none;
+  --bg2: none;
+  --shadow: none;
+  display: none;
+  font-size: 2em;
+  position: relative;
+  background-color: none;
+}
+
+.filter-titles .filter-button::after {
+  content: "×";
+  background: var(--color-blue);
+  position: absolute;
+  top: var(--spacing-tiny);
+  right: var(--spacing-tiny);
+  font-size: 0.5em;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  border-radius: 50%;
+}
+
+.button-link {
+  padding: var(--spacing-small);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+
+  width: 200px;
+  color: white;
+  background-color: var(--color-blue);
+
+  box-shadow: var(--shadow-slight);
+  border-radius: var(--border-radius);
+
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.button-link:hover {
+  background-color: var(--color-blue-lighter);
+}
+
+.learning-order {
+    display: block;
+    font-style: italic;
+    color: var(--color-grey-lighter);
+    font-weight: 600;
+    font-size: medium;
+    opacity: 0;
+}
+
+#filter-order_by-learning_order:checked ~ .filterable .node-card {
+  order: var(--order);
+}
+
+#filter-order_by-learning_order:checked ~ .filterable .learning-order {
+  opacity: 1;
+}
+
+.filter-list {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  padding: var(--spacing-normal);
+  box-shadow: var(--shadow-overlay);
+  transform: translateX(-250px);
+  z-index: 2;
+}
+
+#filter--show_menu:checked ~ .content-container {
+  transform: translateX(120px);
+}
+
+#filter--show_menu:checked ~ .filter-list {
+  transform: translateX(0);
+}
+
+#button--show_menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateX(100%);
+}
+#filter-game_genres-all:checked ~ .filterable #button-game_genres-all {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-game_genres-action:checked ~ .filterable .node-card:not(.action) { display: none; }#filter-game_genres-action:checked ~ .filterable #button-game_genres-action {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-game_genres-arcade:checked ~ .filterable .node-card:not(.arcade) { display: none; }#filter-game_genres-arcade:checked ~ .filterable #button-game_genres-arcade {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-game_genres-puzzle:checked ~ .filterable .node-card:not(.puzzle) { display: none; }#filter-game_genres-puzzle:checked ~ .filterable #button-game_genres-puzzle {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-game_genres-racing:checked ~ .filterable .node-card:not(.racing) { display: none; }#filter-game_genres-racing:checked ~ .filterable #button-game_genres-racing {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-game_genres-rpg:checked ~ .filterable .node-card:not(.rpg) { display: none; }#filter-game_genres-rpg:checked ~ .filterable #button-game_genres-rpg {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-game_genres-shooter:checked ~ .filterable .node-card:not(.shooter) { display: none; }#filter-game_genres-shooter:checked ~ .filterable #button-game_genres-shooter {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-game_genres-simulation:checked ~ .filterable .node-card:not(.simulation) { display: none; }#filter-game_genres-simulation:checked ~ .filterable #button-game_genres-simulation {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-game_genres-sport:checked ~ .filterable .node-card:not(.sport) { display: none; }#filter-game_genres-sport:checked ~ .filterable #button-game_genres-sport {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-game_genres-strategy:checked ~ .filterable .node-card:not(.strategy) { display: none; }#filter-game_genres-strategy:checked ~ .filterable #button-game_genres-strategy {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-game_genres-platform:checked ~ .filterable .node-card:not(.platform) { display: none; }#filter-game_genres-platform:checked ~ .filterable #button-game_genres-platform {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-node_types-all:checked ~ .filterable #button-node_types-all {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-node_types-two_dimensional:checked ~ .filterable .node-card:not(.two_dimensional) { display: none; }#filter-node_types-two_dimensional:checked ~ .filterable #button-node_types-two_dimensional {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-node_types-three_dimensional:checked ~ .filterable .node-card:not(.three_dimensional) { display: none; }#filter-node_types-three_dimensional:checked ~ .filterable #button-node_types-three_dimensional {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-node_types-ui:checked ~ .filterable .node-card:not(.ui) { display: none; }#filter-node_types-ui:checked ~ .filterable #button-node_types-ui {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-node_types-general:checked ~ .filterable .node-card:not(.general) { display: none; }#filter-node_types-general:checked ~ .filterable #button-node_types-general {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-order_by-name:checked ~ .filterable #button-order_by-name {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter-order_by-learning_order:checked ~ .filterable #button-order_by-learning_order {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }#filter--show_menu:checked ~ .filterable #button--show_menu {
+            display: inline-block;
+            color: black;
+            background-color: var(--bg2);
+        }
+  </style>
+</head>
+
+<body>
+  
+        <input type="radio"
+            checked class="tag-selector all"
+            value="all"
+            id="filter-game_genres-all"
+            name="game_genres"><input type="radio"
+            class="tag-selector action"
+            value="action"
+            id="filter-game_genres-action"
+            name="game_genres"><input type="radio"
+            class="tag-selector arcade"
+            value="arcade"
+            id="filter-game_genres-arcade"
+            name="game_genres"><input type="radio"
+            class="tag-selector puzzle"
+            value="puzzle"
+            id="filter-game_genres-puzzle"
+            name="game_genres"><input type="radio"
+            class="tag-selector racing"
+            value="racing"
+            id="filter-game_genres-racing"
+            name="game_genres"><input type="radio"
+            class="tag-selector rpg"
+            value="rpg"
+            id="filter-game_genres-rpg"
+            name="game_genres"><input type="radio"
+            class="tag-selector shooter"
+            value="shooter"
+            id="filter-game_genres-shooter"
+            name="game_genres"><input type="radio"
+            class="tag-selector simulation"
+            value="simulation"
+            id="filter-game_genres-simulation"
+            name="game_genres"><input type="radio"
+            class="tag-selector sport"
+            value="sport"
+            id="filter-game_genres-sport"
+            name="game_genres"><input type="radio"
+            class="tag-selector strategy"
+            value="strategy"
+            id="filter-game_genres-strategy"
+            name="game_genres"><input type="radio"
+            class="tag-selector platform"
+            value="platform"
+            id="filter-game_genres-platform"
+            name="game_genres"><input type="radio"
+            checked class="tag-selector all"
+            value="all"
+            id="filter-node_types-all"
+            name="node_types"><input type="radio"
+            class="tag-selector two_dimensional"
+            value="two_dimensional"
+            id="filter-node_types-two_dimensional"
+            name="node_types"><input type="radio"
+            class="tag-selector three_dimensional"
+            value="three_dimensional"
+            id="filter-node_types-three_dimensional"
+            name="node_types"><input type="radio"
+            class="tag-selector ui"
+            value="ui"
+            id="filter-node_types-ui"
+            name="node_types"><input type="radio"
+            class="tag-selector general"
+            value="general"
+            id="filter-node_types-general"
+            name="node_types"><input type="radio"
+            checked class="tag-selector name"
+            value="name"
+            id="filter-order_by-name"
+            name="order_by"><input type="radio"
+            class="tag-selector learning_order"
+            value="learning_order"
+            id="filter-order_by-learning_order"
+            name="order_by"><input type="checkbox"
+            class="tag-selector show_menu"
+            value="show_menu"
+            id="filter--show_menu"
+            name="">
+        <div id="filter-list" class="filter-list filterable">
+            <section><h2 class="filter-label">Game Genres</h2><div class="filter-group"><label class="filter-button radio-button all" id="button-game_genres-all" for="filter-game_genres-all">all</label><label class="filter-button radio-button action" id="button-game_genres-action" for="filter-game_genres-action">action</label><label class="filter-button radio-button arcade" id="button-game_genres-arcade" for="filter-game_genres-arcade">arcade</label><label class="filter-button radio-button puzzle" id="button-game_genres-puzzle" for="filter-game_genres-puzzle">puzzle</label><label class="filter-button radio-button racing" id="button-game_genres-racing" for="filter-game_genres-racing">racing</label><label class="filter-button radio-button rpg" id="button-game_genres-rpg" for="filter-game_genres-rpg">RPG</label><label class="filter-button radio-button shooter" id="button-game_genres-shooter" for="filter-game_genres-shooter">shooter</label><label class="filter-button radio-button simulation" id="button-game_genres-simulation" for="filter-game_genres-simulation">simulation</label><label class="filter-button radio-button sport" id="button-game_genres-sport" for="filter-game_genres-sport">sport</label><label class="filter-button radio-button strategy" id="button-game_genres-strategy" for="filter-game_genres-strategy">strategy</label><label class="filter-button radio-button platform" id="button-game_genres-platform" for="filter-game_genres-platform">platform</label></div></section><section><h2 class="filter-label">Node Types</h2><div class="filter-group"><label class="filter-button radio-button all" id="button-node_types-all" for="filter-node_types-all">all</label><label class="filter-button radio-button two_dimensional" id="button-node_types-two_dimensional" for="filter-node_types-two_dimensional">2D</label><label class="filter-button radio-button three_dimensional" id="button-node_types-three_dimensional" for="filter-node_types-three_dimensional">3D</label><label class="filter-button radio-button ui" id="button-node_types-ui" for="filter-node_types-ui">UI</label><label class="filter-button radio-button general" id="button-node_types-general" for="filter-node_types-general">general</label></div></section><section><h2 class="filter-label">Sort By</h2><div class="filter-group"><label class="filter-button radio-button name" id="button-order_by-name" for="filter-order_by-name">name</label><label class="filter-button radio-button learning_order" id="button-order_by-learning_order" for="filter-order_by-learning_order">Recommended learning order</label></div></section><section><label class="filter-button checkbox-button show_menu" id="button--show_menu" for="filter--show_menu">|||</label></section>
+        </div>
+        <div id="content" class="content-container filterable">
+            <div class="filter-titles filterable">
+            <label class="filter-button radio-button action" id="button-game_genres-action" for="filter-game_genres-action">action</label><label class="filter-button radio-button arcade" id="button-game_genres-arcade" for="filter-game_genres-arcade">arcade</label><label class="filter-button radio-button puzzle" id="button-game_genres-puzzle" for="filter-game_genres-puzzle">puzzle</label><label class="filter-button radio-button racing" id="button-game_genres-racing" for="filter-game_genres-racing">racing</label><label class="filter-button radio-button rpg" id="button-game_genres-rpg" for="filter-game_genres-rpg">RPG</label><label class="filter-button radio-button shooter" id="button-game_genres-shooter" for="filter-game_genres-shooter">shooter</label><label class="filter-button radio-button simulation" id="button-game_genres-simulation" for="filter-game_genres-simulation">simulation</label><label class="filter-button radio-button sport" id="button-game_genres-sport" for="filter-game_genres-sport">sport</label><label class="filter-button radio-button strategy" id="button-game_genres-strategy" for="filter-game_genres-strategy">strategy</label><label class="filter-button radio-button platform" id="button-game_genres-platform" for="filter-game_genres-platform">platform</label><label class="filter-button radio-button two_dimensional" id="button-node_types-two_dimensional" for="filter-node_types-two_dimensional">2D</label><label class="filter-button radio-button three_dimensional" id="button-node_types-three_dimensional" for="filter-node_types-three_dimensional">3D</label><label class="filter-button radio-button ui" id="button-node_types-ui" for="filter-node_types-ui">UI</label><label class="filter-button radio-button general" id="button-node_types-general" for="filter-node_types-general">general</label>
+        </div>
+            <div id="node-list" class="card-grid"><div class="node-card AnimationPlayer general action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m1 1037.4v14h1.1667v-2h1.8333v2h8v-2h2v2h1v-14h-1v2h-2v-2h-8v2h-1.8333v-2zm1.1667 4h1.8333v2h-1.8333zm9.8333 0h2v2h-2zm-9.8333 4h1.8333v2h-1.8333zm9.8333 0h2v2h-2z" fill="#cea4f1" transform="translate(0 -1036.4)"/></svg>
+ AnimationPlayer
+        <label for="filter-node_types-general"
+               class="tag-pill -floatright -general">general</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Design animations by hand and play them back in the running game.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Animate characters and the environment</li><li>Sequence animations</li><li>Call functions at specific points in time</li> </ul>
+      <a class="button-link" href="AnimationPlayer/AnimationPlayer.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Area three_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m1 1v2 2h2v-2h2v-2zm10 0v2h2v2h2v-4zm-7 3v2 4 2h8v-2-6zm2 2h4v4h-4zm-5 5v2 2h2 2v-2h-2v-2zm12 0v2h-2v2h4v-2-2z" fill="#fc9c9c"/></svg>
+ Area
+        <label for="filter-node_types-three_dimensional"
+               class="tag-pill -floatright -threedimensional">3D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Detects when entities enter, stay inside, or leave an area.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Detect when something is in range</li><li>Design hit and hurt boxes to deal and receive damage</li><li>Override physics and audio effects when in a specific area</li> </ul>
+      <a class="button-link" href="Area/Area.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Area2D two_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m1 1v2 2h2v-2h2v-2zm10 0v2h2v2h2v-4zm-7 3v2 4 2h8v-2-6zm2 2h4v4h-4zm-5 5v2 2h2 2v-2h-2v-2zm12 0v2h-2v2h4v-2-2z" fill="#a5b7f3"/></svg>
+ Area2D
+        <label for="filter-node_types-two_dimensional"
+               class="tag-pill -floatright -twodimensional">2D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Detects when entities enter, stay inside, or leave an area.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Detect when something is in range</li><li>Design hit and hurt boxes to deal and receive damage</li><li>Override physics and audio effects when in a specific area</li> </ul>
+      <a class="button-link" href="Area2D/Area2D.html">Go to guide</a>
+    </div>
+    
+<div class="node-card AudioStreamPlayer general action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="8" x2="8" y1="1" y2="15"><stop offset="0" stop-color="#ff7a7a"/><stop offset=".5" stop-color="#e1dc7a"/><stop offset="1" stop-color="#66ff9e"/></linearGradient><g transform="translate(0 -1036.4)"><path d="m10.023 1044.4c-.56139-.013-1.0235.4264-1.0234.9724v5.0542c.0006911.7482.83361 1.2154 1.5.8414l4-2.5262c.66694-.3743.66694-1.3104 0-1.6847l-4-2.5261c-.14505-.082-.30893-.1269-.47656-.131z" fill="#e0e0e0"/><path d="m11.971 1.002a1.0001 1.0001 0 0 0 -.24609.037109l-7 2a1.0001 1.0001 0 0 0 -.72461.96094v5.5508a2.5 2.5 0 0 0 -.5-.050781 2.5 2.5 0 0 0 -2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.4961-2.4121 1.0001 1.0001 0 0 0 .0039062-.087891v-7.2441l5-1.4277v3.1719l2-1v-3.5a1.0001 1.0001 0 0 0 -1.0293-.99805z" fill="url(#a)" transform="translate(0 1036.4)"/></g></svg>
+ AudioStreamPlayer
+        <label for="filter-node_types-general"
+               class="tag-pill -floatright -general">general</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Plays any sound or music soundtrack, with support for positioning and audio effects.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Play a random sound from a list</li><li>Play a looping background music</li><li>Take into account the distance to objects when playing sounds</li> </ul>
+      <a class="button-link" href="AudioStreamPlayer/AudioStreamPlayer.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Button ui action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m7 1v3.1328l-1.4453-.96484-1.1094 1.6641 3 2a1.0001 1.0001 0 0 0 1.1094 0l3-2-1.1094-1.6641-1.4453.96484v-3.1328zm-1.5 8c-.831 0-1.5.669-1.5 1.5v1.5h-2v2h12v-2h-2v-1.5c0-.831-.669-1.5-1.5-1.5z" fill="#a5efac"/></svg>
+ Button
+        <label for="filter-node_types-ui"
+               class="tag-pill -floatright -ui">UI</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>A button the player can press, check, or toggle</p>
+      <h3>Use cases</h3>
+      <ul> <li>Enter a menu by pressing a button</li><li>Purchase an item upon clicking it</li><li>Activate one option from a handful</li><li>Toggle a game mode on and off</li> </ul>
+      <a class="button-link" href="Button/Button.html">Go to guide</a>
+    </div>
+    
+<div class="node-card CSGBox three_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m12 9c-.55401 0-1 .44599-1 1v1h2v2h1c.55401 0 1-.44599 1-1v-2c0-.55401-.44599-1-1-1zm1 4h-2v-2h-1c-.55401 0-1 .44599-1 1v2c0 .55401.44599 1 1 1h2c.55401 0 1-.44599 1-1z" fill="#5fb2ff"/><path d="m8 .94531-7 3.5v7.2227l7 3.5.29492-.14844c-.18282-.30101-.29492-.64737-.29492-1.0195v-2c0-.72651.40824-1.3664 1-1.7168v-1.6699l4-2v1.3867h1c.36419 0 .70336.10754 1 .2832v-3.8379zm0 2.1152 3.9395 1.9707-3.9395 1.9688-3.9395-1.9688zm-5 3.5527 4 2v3.9414l-4-2.002z" fill="#fc7f7f" stroke-width="1.0667"/></svg>
+ CSGBox
+        <label for="filter-node_types-three_dimensional"
+               class="tag-pill -floatright -threedimensional">3D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Constructive Solid Geometry (CSG) nodes are helpful for fast props and level prototyping.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Construct simple compound objects.</li><li>Carve, add, and intersect custom geometry from external programs through CSGMesh.</li><li>Extrude, spin and follow paths with custom profiles through CSGPolygon.</li> </ul>
+      <a class="button-link" href="CSGBox/CSGBox.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Camera three_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m9 1038.4a3 3 0 0 0 -2.9883 2.7774 3 3 0 0 0 -2.0117-.7774 3 3 0 0 0 -3 3 3 3 0 0 0 2 2.8243v2.1757c0 .554.44599 1 1 1h6c.55401 0 1-.446 1-1v-1l3 2v-6l-3 2v-1.7695a3 3 0 0 0 1-2.2305 3 3 0 0 0 -3-3z" fill="#fc9c9c" transform="translate(0 -1036.4)"/></svg>
+ Camera
+        <label for="filter-node_types-three_dimensional"
+               class="tag-pill -floatright -threedimensional">3D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Displays 3D scenes onto the screen</p>
+      <h3>Use cases</h3>
+      <ul> <li>Display the scene from the player's location.</li><li>Project the mouse position into the 3D world.</li><li>Interpolate camera position to show the surrounding world.</li> </ul>
+      <a class="button-link" href="Camera/Camera.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Camera2D two_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m9 1038.4a3 3 0 0 0 -2.9883 2.7774 3 3 0 0 0 -2.0117-.7774 3 3 0 0 0 -3 3 3 3 0 0 0 2 2.8243v2.1757c0 .554.44599 1 1 1h6c.55401 0 1-.446 1-1v-1l3 2v-6l-3 2v-1.7695a3 3 0 0 0 1-2.2305 3 3 0 0 0 -3-3z" fill="#a5b7f3" transform="translate(0 -1036.4)"/></svg>
+ Camera2D
+        <label for="filter-node_types-two_dimensional"
+               class="tag-pill -floatright -twodimensional">2D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Pans and zooms the view to show different parts of a 2D scene.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Zoom in and out</li><li>Smoothly follow an entity like the player's character</li><li>Shake the screen</li> </ul>
+      <a class="button-link" href="Camera2D/Camera2D.html">Go to guide</a>
+    </div>
+    
+<div class="node-card CanvasLayer general action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 2;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m3 1a2 2 0 0 0 -2 2v6h1v-6a1 1 0 0 1 1-1h6v-1zm10.303 0c-.4344 0-.86973.16881-1.2012.50586l-6.8008 6.918 2.4004 2.4414 6.8008-6.918c.66286-.6742.66286-1.7672 0-2.4414-.33144-.33705-.76482-.50586-1.1992-.50586zm.69727 6v6a1 1 0 0 1 -1 1h-6v1h6a2 2 0 0 0 2-2v-6zm-9.8848 2.5781c-.48501-.048725-.90521.12503-1.1953.45508-.26373.3-.41992.72958-.41992 1.2383 0 1.6277-3.1385-.17848-.33789 2.6699.88382.899 2.6552.67038 3.5391-.22852.88384-.899.88382-2.357 0-3.2559-.55011-.55955-1.1009-.83018-1.5859-.87891z" fill="#e0e0e0" fill-opacity=".99608"/></svg>
+ CanvasLayer
+        <label for="filter-node_types-general"
+               class="tag-pill -floatright -general">general</label>
+        </label>
+        <span class="learning-order">learn order: 2</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Draws its children in a new layer you can put in front or behind of other layers.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Keep the UI fixed on the screen at all times</li><li>Create transition effects</li><li>Apply post-processing shaders to the entire screen</li> </ul>
+      <a class="button-link" href="CanvasLayer/CanvasLayer.html">Go to guide</a>
+    </div>
+    
+<div class="node-card GridMap three_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 2;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m8 1-6 3v8l6 3 6-3v-2l-2-1-4 2-2-1v-4l2-1v-2l2-1zm4 2-2 1v2l2 1 2-1v-2z" fill="#fc7f7f" fill-opacity=".99608"/></svg>
+ GridMap
+        <label for="filter-node_types-three_dimensional"
+               class="tag-pill -floatright -threedimensional">3D</label>
+        </label>
+        <span class="learning-order">learn order: 2</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Three-dimensional tilemap for level creation</p>
+      <h3>Use cases</h3>
+      <ul> <li>Place buildings into a map and remove them</li><li>Create levels with probabilistic cells that randomly fill with specific content</li><li>Build a race track in game that automatically connects adjacent cells</li> </ul>
+      <a class="button-link" href="GridMap/GridMap.html">Go to guide</a>
+    </div>
+    
+<div class="node-card HBoxContainer ui action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m3 1c-1.1046 0-2 .89543-2 2v10c0 1.1046.89543 2 2 2h10c1.1046 0 2-.89543 2-2v-10c0-1.1046-.89543-2-2-2zm0 2h2v10h-2zm4 0h2v10h-2zm4 0h2v10h-2z" fill="#a5efac"/></svg>
+ HBoxContainer
+        <label for="filter-node_types-ui"
+               class="tag-pill -floatright -ui">UI</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Arranges its children in rows or columns.</p>
+      <h3>Use cases</h3>
+      <ul> <li>List commands in a menu</li><li>Align a character's name with life and mana bars</li><li>Align icons horizontally or vertically</li> </ul>
+      <a class="button-link" href="HBoxContainer/HBoxContainer.html">Go to guide</a>
+    </div>
+    
+<div class="node-card KinematicBody three_dimensional platform arcade action rpg strategy sport" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m6 1c-.55401 0-1 .44599-1 1v3c0 .55401.44599 1 1 1h1v.99023a1.0001 1.0001 0 0 0 -.31641.0625l-2.0508.68359-.68359-2.0508a1.0001 1.0001 0 0 0 -.99023-.69727 1.0001 1.0001 0 0 0 -.9082 1.3281l1 3a1.0001 1.0001 0 0 0 1.2656.63281l1.6836-.56055v.61133c0 .04088.018715.07566.023437.11523l-4.5781 3.0527a1.0001 1.0001 0 1 0 1.1094 1.6641l5.0566-3.3711 1.4941 2.9863a1.0001 1.0001 0 0 0 1.2109.50195l3-1a1.0001 1.0001 0 1 0 -.63281-1.8965l-2.1777.72461-.97461-1.9512c.2759-.17764.46875-.47227.46875-.82617v-1h1.3828l.72266 1.4473a1.0001 1.0001 0 1 0 1.7891-.89453l-1-2a1.0001 1.0001 0 0 0 -.89453-.55273h-3v-1h1c.55401 0 1-.44599 1-1v-3c0-.55401-.44599-1-1-1zm0 2h1v2h-1z" fill="#fc9c9c" fill-opacity=".99608"/></svg>
+ KinematicBody
+        <label for="filter-node_types-three_dimensional"
+               class="tag-pill -floatright -threedimensional">3D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-platform" class="tag-pill -platform">platform</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label>
+          </div>
+      </details>
+      <p>Detects collisions with the environment and gives you full control over your characters' motion.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Handle physics interactions your way</li><li>Design 3D platformer movement as in Mario or Crash Bandicoot</li><li>Design First Person Shooter movement</li> </ul>
+      <a class="button-link" href="KinematicBody/KinematicBody.html">Go to guide</a>
+    </div>
+    
+<div class="node-card KinematicBody2D two_dimensional platform arcade action rpg shooter strategy sport" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m6.4921 1c-.55401 0-1 .446-1 1v3c0 .554.44599 1 1 1h1v.9902a1.0001 1.0001 0 0 0 -.31641.062l-2.0508.6836-.68359-2.0508a1.0001 1.0001 0 0 0 -.99023-.6972 1.0001 1.0001 0 0 0 -.9082 1.3281l1 3a1.0001 1.0001 0 0 0 1.2656.6328l1.6836-.5605v.6113c0 .041.018715.076.023437.1152l-4.5781 3.0528a1.0001 1.0001 0 1 0 1.1094 1.664l5.0566-3.3711 1.4941 2.9864a1.0001 1.0001 0 0 0 1.2109.5019l3-1a1.0001 1.0001 0 1 0 -.63281-1.8965l-2.1777.7246-.97461-1.9511c.2759-.1777.46875-.4723.46875-.8262v-1h1.3828l.72266 1.4473a1.0001 1.0001 0 1 0 1.7891-.8946l-1-2a1.0001 1.0001 0 0 0 -.89453-.5527h-3v-1h1c.55401 0 1-.446 1-1v-3c0-.554-.44599-1-1-1zm0 2h1v2h-1z" fill="#a5b7f3"/></svg>
+ KinematicBody2D
+        <label for="filter-node_types-two_dimensional"
+               class="tag-pill -floatright -twodimensional">2D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-platform" class="tag-pill -platform">platform</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label>
+          </div>
+      </details>
+      <p>Detects collisions with the environment and gives you full control over your characters' motion.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Handle physics interactions your way</li><li>Design side-scrolling movement as in Mario or Sonic</li><li>Design top-down movement as in Zelda</li> </ul>
+      <a class="button-link" href="KinematicBody2D/KinematicBody2D.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Label ui action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m6 3a1.0001 1.0001 0 0 0 -.70703.29297l-4 4a1.0001 1.0001 0 0 0 0 1.4141l4 4a1.0001 1.0001 0 0 0 .70703.29297h8a1.0001 1.0001 0 0 0 1-1v-8a1.0001 1.0001 0 0 0 -1-1h-8zm-1 4a1 1 0 0 1 1 1 1 1 0 0 1 -1 1 1 1 0 0 1 -1-1 1 1 0 0 1 1-1z" fill="#a5efac" fill-rule="evenodd"/></svg>
+ Label
+        <label for="filter-node_types-ui"
+               class="tag-pill -floatright -ui">UI</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Displays text and animates text display with limited control over formatting.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Simple text in a menu or for simple dialogues</li><li>Display numbers of coins, resources, or character stats</li><li>Write text for a debug panel or a plugin</li> </ul>
+      <a class="button-link" href="Label/Label.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Light three_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m7 1v3h2v-3zm-2.5352 2.0508-1.4141 1.4141 1.4141 1.4141 1.4141-1.4141zm7.0703 0-1.4141 1.4141 1.4141 1.4141 1.4141-1.4141zm-3.5352 1.9492c-1.6569 0-3 1.3432-3 3s1.3431 3 3 3 3-1.3432 3-3-1.3431-3-3-3zm-7 2v2h3v-2zm11 0v2h3v-2zm-7.5352 3.1211-1.4141 1.4141 1.4141 1.4141 1.4141-1.4141zm7.0703 0-1.4141 1.4141 1.4141 1.4141 1.4141-1.4141zm-4.5352 1.8789v3h2v-3z" fill="#fc7f7f" fill-opacity=".99608"/></svg>
+ Light
+        <label for="filter-node_types-three_dimensional"
+               class="tag-pill -floatright -threedimensional">3D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Illuminates 3D surfaces and casts shadows to highlight locations and add atmosphere.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Casting shadows from the sun</li><li>Pre-rendering light details with raytracing</li><li>Shooting out lights with a gun</li> </ul>
+      <a class="button-link" href="Light/Light.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Line2D two_dimensional action arcade puzzle rpg shooter simulation sport strategy platform" style="--order: 3;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m2 1045.4 3 4 3-10 3 6 3-2" fill="none" stroke="#a5b7f3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="translate(0 -1036.4)"/></svg>
+ Line2D
+        <label for="filter-node_types-two_dimensional"
+               class="tag-pill -floatright -twodimensional">2D</label>
+        </label>
+        <span class="learning-order">learn order: 3</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Draw lines, curves, and trails with ease</p>
+      <h3>Use cases</h3>
+      <ul> <li>Laser beams and bullet trails</li><li>Ropes and chains</li><li>Drawing paths</li> </ul>
+      <a class="button-link" href="Line2D/Line2D.html">Go to guide</a>
+    </div>
+    
+<div class="node-card LineEdit ui action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 3;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m2 4v5h2v-5zm-1 7c0 1.1046.89543 2 2 2h10c1.1046 0 2-.89543 2-2h-2-10z" fill="#a5efac"/></svg>
+ LineEdit
+        <label for="filter-node_types-ui"
+               class="tag-pill -floatright -ui">UI</label>
+        </label>
+        <span class="learning-order">learn order: 3</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>A field inside which the player can type anything</p>
+      <h3>Use cases</h3>
+      <ul> <li>Login and password fields</li><li>A field to let the player type their character's name</li><li>A chat box's text input</li> </ul>
+      <a class="button-link" href="LineEdit/LineEdit.html">Go to guide</a>
+    </div>
+    
+<div class="node-card MeshInstance three_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 3;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m3 1a2 2 0 0 0 -2 2 2 2 0 0 0 1 1.7305v6.541a2 2 0 0 0 -1 1.7285 2 2 0 0 0 2 2 2 2 0 0 0 1.7305-1h6.541a2 2 0 0 0 1.7285 1 2 2 0 0 0 2-2 2 2 0 0 0 -1.0312-1.75h.03125v-6.5215a2 2 0 0 0 1-1.7285 2 2 0 0 0 -2-2 2 2 0 0 0 -1.7305 1h-6.541a2 2 0 0 0 -1.7285-1zm2.4141 3h5.8574a2 2 0 0 0 .72852.73047v5.8555l-6.5859-6.5859zm-1.4141 1.4141 6.5859 6.5859h-5.8574a2 2 0 0 0 -.72852-.73047v-5.8555z" fill="#fc9c9c" fill-opacity=".99608"/></svg>
+ MeshInstance
+        <label for="filter-node_types-three_dimensional"
+               class="tag-pill -floatright -threedimensional">3D</label>
+        </label>
+        <span class="learning-order">learn order: 3</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Place meshes in your scenes</p>
+      <h3>Use cases</h3>
+      <ul> <li>Decorate a level</li><li>Create performant environments</li><li>Manipulate Boids</li><li>Visualize a heightmap</li> </ul>
+      <a class="button-link" href="MeshInstance/MeshInstance.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Navigation three_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 3;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m3 1050.4 5-2 5 2-5-12z" fill="#fc9c9c" fill-opacity=".99608" fill-rule="evenodd" transform="translate(0 -1036.4)"/></svg>
+ Navigation
+        <label for="filter-node_types-three_dimensional"
+               class="tag-pill -floatright -threedimensional">3D</label>
+        </label>
+        <span class="learning-order">learn order: 3</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Make simple paths for movement and AI navigation.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Simple pathfinding</li><li>Enemy pursuit</li><li>Grid-based movement</li> </ul>
+      <a class="button-link" href="Navigation/Navigation.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Navigation2D two_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 3;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m3 1050.4 5-2 5 2-5-12z" fill="#a5b7f3" fill-opacity=".98824" fill-rule="evenodd" transform="translate(0 -1036.4)"/></svg>
+ Navigation2D
+        <label for="filter-node_types-two_dimensional"
+               class="tag-pill -floatright -twodimensional">2D</label>
+        </label>
+        <span class="learning-order">learn order: 3</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Make simple paths for movement and AI navigation.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Simple pathfinding</li><li>Enemy pursuit</li><li>Avoiding hazards</li> </ul>
+      <a class="button-link" href="Navigation2D/Navigation2D.html">Go to guide</a>
+    </div>
+    
+<div class="node-card NinePatchRect ui action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="#a5efac" transform="translate(0 -1036.4)"><path d="m1 1037.4h2v14h-2z"/><path d="m1 1049.4h14v2h-14z"/><path d="m1 1037.4h14v2h-14z"/><path d="m13 1037.4h2v14h-2z"/><path d="m1 1041.4h14v.99998h-14z"/><path d="m1 1046.4h14v.99998h-14z"/><g transform="rotate(90)"><path d="m1037.4-6h14v.99998h-14z"/><path d="m1037.4-11h14v.99998h-14z"/></g></g></svg>
+ NinePatchRect
+        <label for="filter-node_types-ui"
+               class="tag-pill -floatright -ui">UI</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>A texture-based panel that can smartly tile edges while preserving the look of corners.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Putting custom art on a user interface</li><li>Background for other UI nodes</li> </ul>
+      <a class="button-link" href="NinePatchRect/NinePatchRect.html">Go to guide</a>
+    </div>
+    
+<div class="node-card OptionButton ui action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 4;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 -1036.4)"><path d="m3 3c-1.1046 0-2 .89543-2 2v6c0 1.1046.89543 2 2 2h5 1 1 2 1c1.1046 0 2-.89543 2-2v-6c0-1.1046-.89543-2-2-2h-1-2-1-1zm8 2.9863a1.0001 1.0001 0 0 1 .7168 1.7207l-3 3a1.0001 1.0001 0 0 1 -1.4141 0l-3-3a1.0001 1.0001 0 0 1 .69727-1.7168 1.0001 1.0001 0 0 1 .7168.30273l2.293 2.293 2.293-2.293a1.0001 1.0001 0 0 1 .69727-.30664z" fill="#a5efac" transform="translate(0 1036.4)"/><path d="m4 1042.4h4v4h-4z" fill="none"/></g></svg>
+ OptionButton
+        <label for="filter-node_types-ui"
+               class="tag-pill -floatright -ui">UI</label>
+        </label>
+        <span class="learning-order">learn order: 4</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>A dropdown list of buttons.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Mutually exclusive menu options, such as difficulty</li><li>Dropdown menus inside apps and editor plugins</li> </ul>
+      <a class="button-link" href="OptionButton/OptionButton.html">Go to guide</a>
+    </div>
+    
+<div class="node-card PanelContainer ui action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 3;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m3 1c-1.1046 0-2 .89543-2 2v10c0 1.1046.89543 2 2 2h10c1.1046 0 2-.89543 2-2v-10c0-1.1046-.89543-2-2-2zm0 2h10v10h-10z" fill="#a5efac"/></svg>
+ PanelContainer
+        <label for="filter-node_types-ui"
+               class="tag-pill -floatright -ui">UI</label>
+        </label>
+        <span class="learning-order">learn order: 3</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Draws a background panel behind its children and resizes with them.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Hold items inside slots in an inventory</li><li>Visual background for cards in a card game</li><li>A speech bubble's background that scales to fit the text</li> </ul>
+      <a class="button-link" href="PanelContainer/PanelContainer.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Particles2D two_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m8 1a4.5 5 0 0 0 -4.4141 4.0312 3 3 0 0 0 -2.5859 2.9688 3 3 0 0 0 3 3h8a3 3 0 0 0 3-3 3 3 0 0 0 -2.5898-2.9668 4.5 5 0 0 0 -4.4102-4.0332zm-4 11a1 1 0 0 0 -1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0 -1-1zm8 0a1 1 0 0 0 -1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0 -1-1zm-4 1a1 1 0 0 0 -1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0 -1-1z" fill="#8da5f3"/></svg>
+ Particles2D
+        <label for="filter-node_types-two_dimensional"
+               class="tag-pill -floatright -twodimensional">2D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Used for visual effects. Draws many textures using physics simulation and animations.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Create flames, smoke, spells, splashes, puffs of dust, and all sorts of visual effects.</li><li>Animate many sprites efficiently using the GPU and shaders.</li> </ul>
+      <a class="button-link" href="Particles2D/Particles2D.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Path three_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m13 1a2 2 0 0 0 -2 2 2 2 0 0 0 .84961 1.6328c-.19239.88508-.55317 1.3394-.98633 1.6426-.64426.451-1.7129.60547-2.9629.73047s-2.6814.22053-3.9121 1.082c-.89278.62493-1.5321 1.6522-1.8184 3.0957a2 2 0 0 0 -1.1699 1.8164 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0 -.84961-1.6328c.19235-.88496.55306-1.3373.98633-1.6406.64426-.451 1.7129-.60547 2.9629-.73047s2.6814-.22053 3.9121-1.082c.8927-.62488 1.5321-1.6538 1.8184-3.0977a2 2 0 0 0 1.1699-1.8164 2 2 0 0 0 -2-2z" fill="#fc9c9c" fill-opacity=".99608"/></svg>
+ Path
+        <label for="filter-node_types-three_dimensional"
+               class="tag-pill -floatright -threedimensional">3D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Path works in conjunction with PathFollow to constrain movement of nodes on curves in 3D space. It can also be used without PathFollow to design smooth curves.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Construction of paths using A* for player units to move on.</li><li>Generate random spawn positions at the edge of the screen or on any curve.</li><li>We can also use it in more creative ways.</li> </ul>
+      <a class="button-link" href="Path/Path.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Path2D two_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m13 1a2 2 0 0 0 -2 2 2 2 0 0 0 .84961 1.6328c-.19239.88508-.55317 1.3394-.98633 1.6426-.64426.451-1.7129.60547-2.9629.73047s-2.6814.22053-3.9121 1.082c-.89278.62493-1.5321 1.6522-1.8184 3.0957a2 2 0 0 0 -1.1699 1.8164 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0 -.84961-1.6328c.19235-.88496.55306-1.3373.98633-1.6406.64426-.451 1.7129-.60547 2.9629-.73047s2.6814-.22053 3.9121-1.082c.8927-.62488 1.5321-1.6538 1.8184-3.0977a2 2 0 0 0 1.1699-1.8164 2 2 0 0 0 -2-2z" fill="#a5b7f3" fill-opacity=".98824"/></svg>
+ Path2D
+        <label for="filter-node_types-two_dimensional"
+               class="tag-pill -floatright -twodimensional">2D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Path2D works in conjunction with PathFollow2D to constrain movement of nodes on curves. It can also be used in without PathFollow2D to design smooth curves.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Construction of paths using A* for player units to move on.</li><li>Generate random spawn positions at the edge of the screen or on any curve.</li><li>We can also use it in more creative ways.</li> </ul>
+      <a class="button-link" href="Path2D/Path2D.html">Go to guide</a>
+    </div>
+    
+<div class="node-card ProgressBar ui action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 3;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m3 3c-1.1046 0-2 .89543-2 2v6c0 1.1046.89543 2 2 2h10c1.1046 0 2-.89543 2-2v-6c0-1.1046-.89543-2-2-2zm0 2h10v6h-10zm1 1v4h1v-4zm2 0v4h1v-4zm2 0v4h1v-4z" fill="#a5efac"/></svg>
+ ProgressBar
+        <label for="filter-node_types-ui"
+               class="tag-pill -floatright -ui">UI</label>
+        </label>
+        <span class="learning-order">learn order: 3</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Draws and represents all sorts of gauges. Supports horizontal, vertical, and radial bars.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Life and mana bars</li><li>Loading progress bar</li><li>Ability cooldowns</li> </ul>
+      <a class="button-link" href="ProgressBar/ProgressBar.html">Go to guide</a>
+    </div>
+    
+<div class="node-card RayCast three_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m7 1v9h-3l4 5 4-5h-3v-9z" fill="#fc9c9c" fill-opacity=".99608"/></svg>
+ RayCast
+        <label for="filter-node_types-three_dimensional"
+               class="tag-pill -floatright -threedimensional">3D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Find out what objects are in a given direction from a point.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Firing fast bullets</li><li>Sensing walls and obstacles</li><li>Sight for enemy AI</li> </ul>
+      <a class="button-link" href="RayCast/RayCast.html">Go to guide</a>
+    </div>
+    
+<div class="node-card RayCast2D two_dimensional platform arcade action rpg shooter strategy sport" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m7 1v9h-3l4 5 4-5h-3v-9z" fill="#a5b7f3"/></svg>
+ RayCast2D
+        <label for="filter-node_types-two_dimensional"
+               class="tag-pill -floatright -twodimensional">2D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-platform" class="tag-pill -platform">platform</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label>
+          </div>
+      </details>
+      <p>Projects a line and detects collisions with that line.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Line of sight for AI agents</li><li>Detect the floor or environment features from a distance</li><li>Weapons that hit instantly, like lasers</li> </ul>
+      <a class="button-link" href="RayCast2D/RayCast2D.html">Go to guide</a>
+    </div>
+    
+<div class="node-card RemoteTransform three_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 3;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m8 1c-2.8565 0-5.4995 1.5262-6.9277 4a1 1 0 0 0 .36523 1.3672 1 1 0 0 0 1.3672-.36719c1.0726-1.8578 3.0501-3 5.1953-3s4.1227 1.1422 5.1953 3a1 1 0 0 0 1.3672.36719 1 1 0 0 0 .36523-1.3672c-1.4283-2.4738-4.0712-4-6.9277-4zm0 4c-1.8056 0-3.396 1.2207-3.8633 2.9648a1 1 0 0 0 .70703 1.2246 1 1 0 0 0 1.2246-.70703c.23553-.8791 1.0216-1.4824 1.9316-1.4824s1.6961.60332 1.9316 1.4824a1 1 0 0 0 1.2246.70703 1 1 0 0 0 .70703-1.2246c-.46732-1.7441-2.0577-2.9648-3.8633-2.9648zm0 4c-.554 0-1 .446-1 1v1h-3a4 4 0 0 0 2 3.4648 4 4 0 0 0 4 0 4 4 0 0 0 2-3.4648h-3v-1c0-.554-.446-1-1-1z" fill="#fc9c9c"/></svg>
+ RemoteTransform
+        <label for="filter-node_types-three_dimensional"
+               class="tag-pill -floatright -threedimensional">3D</label>
+        </label>
+        <span class="learning-order">learn order: 3</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Share position, scale and rotation between 3D nodes</p>
+      <h3>Use cases</h3>
+      <ul> <li>Dragging objects in 3D space</li><li>Attaching cameras to player characters</li><li>Moving along paths</li> </ul>
+      <a class="button-link" href="RemoteTransform/RemoteTransform.html">Go to guide</a>
+    </div>
+    
+<div class="node-card RemoteTransform2D two_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 2;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m8 1c-2.8565 0-5.4995 1.5262-6.9277 4a1 1 0 0 0 .36523 1.3672 1 1 0 0 0 1.3672-.36719c1.0726-1.8578 3.0501-3 5.1953-3s4.1227 1.1422 5.1953 3a1 1 0 0 0 1.3672.36719 1 1 0 0 0 .36523-1.3672c-1.4283-2.4738-4.0712-4-6.9277-4zm0 4c-1.8056 0-3.396 1.2207-3.8633 2.9648a1 1 0 0 0 .70703 1.2246 1 1 0 0 0 1.2246-.70703c.23553-.8791 1.0216-1.4824 1.9316-1.4824s1.6961.60332 1.9316 1.4824a1 1 0 0 0 1.2246.70703 1 1 0 0 0 .70703-1.2246c-.46732-1.7441-2.0577-2.9648-3.8633-2.9648zm0 4c-.554 0-1 .446-1 1v1h-3a4 4 0 0 0 2 3.4648 4 4 0 0 0 4 0 4 4 0 0 0 2-3.4648h-3v-1c0-.554-.446-1-1-1z" fill="#a5b7f3" fill-opacity=".98824"/></svg>
+ RemoteTransform2D
+        <label for="filter-node_types-two_dimensional"
+               class="tag-pill -floatright -twodimensional">2D</label>
+        </label>
+        <span class="learning-order">learn order: 2</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Takes control of another node's position, scale, and rotation, anywhere in the scene tree.</p>
+      <h3>Use cases</h3>
+      <ul> <li>UI widget attached to game character, like a life bar</li><li>Moving icons to reflect game characters in a map view</li><li>Following a predefined path for some time</li> </ul>
+      <a class="button-link" href="RemoteTransform2D/RemoteTransform2D.html">Go to guide</a>
+    </div>
+    
+<div class="node-card RichTextLabel ui action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 2;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m1 1v2h8v-2zm12 0-3 3h2v8h-2l3 3 3-3h-2v-8h2zm-12 4v2h2v-2zm4 0v2h4v-2zm-4 4v2h8v-2zm0 4v2h4v-2zm6 0v2h2v-2z" fill="#a5efac"/></svg>
+ RichTextLabel
+        <label for="filter-node_types-ui"
+               class="tag-pill -floatright -ui">UI</label>
+        </label>
+        <span class="learning-order">learn order: 2</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Displays formatted text and allows you to animate text programmatically.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Apply bold, italics, and other formatting to your text</li><li>Change the color of part of the text</li><li>Detect when the player hovers over a keyword with the mouse</li><li>Create custom text effects and animations, like to make a word shake</li> </ul>
+      <a class="button-link" href="RichTextLabel/RichTextLabel.html">Go to guide</a>
+    </div>
+    
+<div class="node-card RigidBody three_dimensional platform arcade action rpg shooter strategy sport" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m8 1a7 7 0 0 0 -7 7 7 7 0 0 0 .035156.69922 7 7 0 0 0 .27734 1.3691 7 7 0 0 0 .91016 1.8848 7 7 0 0 0 .30273.4082c.000785-.00256.0011667-.005252.0019532-.007812a7 7 0 0 0 5.4727 2.6465 7 7 0 0 0 3.2422-.80273c.001374.000393.002531.00156.003906.001953a7 7 0 0 0 .035156-.021485 7 7 0 0 0 .42578-.25 7 7 0 0 0 .16992-.10352 7 7 0 0 0 .36914-.26953 7 7 0 0 0 .20508-.15625 7 7 0 0 0 .3418-.30859 7 7 0 0 0 .16406-.1543 7 7 0 0 0 .33008-.36133 7 7 0 0 0 .14062-.16016 7 7 0 0 0 .27734-.37305 7 7 0 0 0 .13867-.19531 7 7 0 0 0 .21875-.36133 7 7 0 0 0 .14258-.25 7 7 0 0 0 .15625-.33398 7 7 0 0 0 .13867-.31055 7 7 0 0 0 .10742-.30859 7 7 0 0 0 .11914-.35352 7 7 0 0 0 .087891-.36914 7 7 0 0 0 .066406-.29297 7 7 0 0 0 .056641-.40039 7 7 0 0 0 .037109-.3125 7 7 0 0 0 .025391-.55273 7 7 0 0 0 -4.3848-6.4883 7 7 0 0 0 -.007812-.0039063 7 7 0 0 0 -.001953 0 7 7 0 0 0 -.61523-.21289 7 7 0 0 0 -.044922-.015625 7 7 0 0 0 -.0058594-.0019531 7 7 0 0 0 -.55078-.13086 7 7 0 0 0 -.14062-.03125 7 7 0 0 0 -.55078-.072266 7 7 0 0 0 -.14258-.017578 7 7 0 0 0 -.55469-.025391zm1.9512 1.334a6 6 0 0 1 4.0488 5.666h-7a2 2 0 0 0 -.94922-1.6992c1.3464-2.0289 2.6038-3.2631 3.9004-3.9668zm-6.8281 2.1797c.14632.65093.35776 1.2833.68359 1.8848a2 2 0 0 0 -.80664 1.6016h-1a6 6 0 0 1 1.123-3.4863zm1.877 1.4863a2 2 0 0 0 -.10938.0039062 2 2 0 0 1 .10938-.0039062zm-.18945.011719a2 2 0 0 0 -.12109.013672 2 2 0 0 1 .12109-.013672zm-.44141.09375a2 2 0 0 0 -.056641.019531 2 2 0 0 1 .056641-.019531zm-1.3594 2.0605a2 2 0 0 0 .013672.11914 2 2 0 0 1 -.013672-.11914zm.027344.20898a2 2 0 0 0 .017578.080078 2 2 0 0 1 -.017578-.080078zm.73438 1.1992a2 2 0 0 0 1.2285.42578 2 2 0 0 0 1.0508-.30078c1.345 2.0268 2.6013 3.2645 3.8965 3.9688a6 6 0 0 1 -1.9473.33203 6 6 0 0 1 -5.0547-2.7695c.23771-.5785.50336-1.1403.82617-1.6563z" fill="#fc9c9c" fill-opacity=".99608"/></svg>
+ RigidBody
+        <label for="filter-node_types-three_dimensional"
+               class="tag-pill -floatright -threedimensional">3D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-platform" class="tag-pill -platform">platform</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label>
+          </div>
+      </details>
+      <p>Moves objects using the physics engine, with minimal coding. You apply forces to rigid bodies, and the physics engine handles most movement and collisions for you.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Physics platformers</li><li>Vehicles</li><li>Ragdolls</li><li>Collapsing structures as in Angry Birds</li> </ul>
+      <a class="button-link" href="RigidBody/RigidBody.html">Go to guide</a>
+    </div>
+    
+<div class="node-card RigidBody2D two_dimensional platform arcade action rpg shooter strategy sport" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m8 1a7 7 0 0 0 -7 7 7 7 0 0 0 1.2227 3.9531 7 7 0 0 0 .30273.4082c.000785-.00256.0011667-.005252.0019532-.007812a7 7 0 0 0 5.4727 2.6465 7 7 0 0 0 3.2422-.80273c.001375.000393.002531.00156.003906.001953a7 7 0 0 0 .035156-.021485 7 7 0 0 0 .42578-.25 7 7 0 0 0 .16992-.10352 7 7 0 0 0 .36914-.26953 7 7 0 0 0 .20508-.15625 7 7 0 0 0 .3418-.30859 7 7 0 0 0 .16406-.1543 7 7 0 0 0 .33008-.36133 7 7 0 0 0 .14062-.16016 7 7 0 0 0 .27734-.37305 7 7 0 0 0 .13867-.19531 7 7 0 0 0 .21875-.36133 7 7 0 0 0 .14258-.25 7 7 0 0 0 .15625-.33398 7 7 0 0 0 .13867-.31055 7 7 0 0 0 .10742-.30859 7 7 0 0 0 .11914-.35352 7 7 0 0 0 .087891-.36914 7 7 0 0 0 .066406-.29297 7 7 0 0 0 .056641-.40039 7 7 0 0 0 .037109-.3125 7 7 0 0 0 .025391-.55273 7 7 0 0 0 -4.3926-6.4922 7 7 0 0 0 -.001953 0 7 7 0 0 0 -.66016-.22852 7 7 0 0 0 -.0058594-.0019531 7 7 0 0 0 -.55078-.13086 7 7 0 0 0 -.14062-.03125 7 7 0 0 0 -.55078-.072266 7 7 0 0 0 -.14258-.017578 7 7 0 0 0 -.55469-.025391zm1.9512 1.334a6 6 0 0 1 4.0488 5.666h-7a2 2 0 0 0 -.94922-1.6992c1.3464-2.0289 2.6038-3.2631 3.9004-3.9668zm-6.8281 2.1797c.14632.65093.35776 1.2833.68359 1.8848a2 2 0 0 0 -.80664 1.6016h-1a6 6 0 0 1 1.123-3.4863zm1.877 1.4863a2 2 0 0 0 -.10938.0039062 2 2 0 0 1 .10938-.0039062zm-.18945.011719a2 2 0 0 0 -.12109.013672 2 2 0 0 1 .12109-.013672zm-.44141.09375a2 2 0 0 0 -.056641.019531 2 2 0 0 1 .056641-.019531zm-1.3594 2.0605a2 2 0 0 0 .013672.11914 2 2 0 0 1 -.013672-.11914zm.027344.20898a2 2 0 0 0 .017578.080078 2 2 0 0 1 -.017578-.080078zm.73438 1.1992a2 2 0 0 0 1.2285.42578 2 2 0 0 0 1.0508-.30078c1.345 2.0268 2.6013 3.2645 3.8965 3.9688a6 6 0 0 1 -1.9473.33203 6 6 0 0 1 -5.0547-2.7695c.23771-.5785.50336-1.1403.82617-1.6563z" fill="#a5b7f3" fill-opacity=".98824"/></svg>
+ RigidBody2D
+        <label for="filter-node_types-two_dimensional"
+               class="tag-pill -floatright -twodimensional">2D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-platform" class="tag-pill -platform">platform</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label>
+          </div>
+      </details>
+      <p>Moves objects using the physics engine, with minimal coding. You apply forces to rigid bodies and the physics engine handles most movement and collisions for you.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Physics platformers</li><li>Vehicles</li><li>Ragdolls</li><li>Collapsing structures as in Angry Birds</li> </ul>
+      <a class="button-link" href="RigidBody2D/RigidBody2D.html">Go to guide</a>
+    </div>
+    
+<div class="node-card TileMap two_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m1 1v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2zm-12 3v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2zm-12 3v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2zm-12 3v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2zm-12 3v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2zm3 0v2h2v-2z" fill="#a5b7f3" fill-opacity=".98824"/></svg>
+ TileMap
+        <label for="filter-node_types-two_dimensional"
+               class="tag-pill -floatright -twodimensional">2D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Draws and manages tile-based maps.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Design levels using reusable tiles</li><li>Create a board for grid-based games</li> </ul>
+      <a class="button-link" href="TileMap/TileMap.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Timer general action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m3 1a1.0001 1.0001 0 0 0 -.38672.078125 1.0001 1.0001 0 0 0 -.0019531 0c-.0022762.0009545-.0035918.0029354-.0058593.0039062a1.0001 1.0001 0 0 0 -.31055.20898c-.0012857.0012787-.0026276.0026206-.0039063.0039063a1.0001 1.0001 0 0 0 -.20508.30469c-.0029915.0068502-.0069239.012601-.0097656.019531a1.0001 1.0001 0 0 0 -.076172.38086c0 1.5.96697 2.6247 1.873 3.6602.76081.8695 1.4161 1.6425 1.875 2.3398-.45889.6974-1.1141 1.4723-1.875 2.3418-.90608 1.0355-1.873 2.1582-1.873 3.6582a1.0001 1.0001 0 0 0 .078125.38867v.001953c.0009292.002204.0029617.003663.0039062.005859a1.0001 1.0001 0 0 0 .20898.30664c.0010185.001027.0028834.004836.0039063.005859a1.0001 1.0001 0 0 0 .30078.20312c.0093182.004119.017877.007879.027344.011719a1.0001 1.0001 0 0 0 .37695.076172h10a1.0001 1.0001 0 0 0 .375-.074219c.010174-.0041.019294-.009251.029297-.013672a1.0001 1.0001 0 0 0 .29297-.19922c.004786-.004679.00898-.008899.013672-.013672a1.0001 1.0001 0 0 0 .20117-.29492c.004119-.009318.007879-.017877.011719-.027344a1.0001 1.0001 0 0 0 .076172-.37695c0-1.5-.96697-2.6227-1.873-3.6582-.76087-.8695-1.4161-1.6444-1.875-2.3418.4589-.6973 1.1142-1.4703 1.875-2.3398.90608-1.0355 1.873-2.1602 1.873-3.6602a1.0001 1.0001 0 0 0 -.078125-.39062 1.0001 1.0001 0 0 0 -.21484-.31641 1.0001 1.0001 0 0 0 -.31055-.21094 1.0001 1.0001 0 0 0 -.011718-.0058593 1.0001 1.0001 0 0 0 -.38477-.076172h-10zm1.5879 2h6.8242c-.2378.4408-.3055.7892-.78906 1.3418-.84392.9645-1.8983 1.9723-2.5176 3.2109a1.0001 1.0001 0 0 0 -.10547.44727 1.0001 1.0001 0 0 0 -.10547-.44727c-.61926-1.2386-1.6737-2.2464-2.5176-3.2109-.48356-.5526-.55126-.901-.78906-1.3418z" fill="#e0e0e0"/></svg>
+ Timer
+        <label for="filter-node_types-general"
+               class="tag-pill -floatright -general">general</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Counts down time and lets you know when it times out.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Ability and weapon cooldowns</li><li>Spawning enemies at regular time intervals</li><li>Delaying the execution of code</li> </ul>
+      <a class="button-link" href="Timer/Timer.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Tween general action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m7 1v2h6v6h2v-8zm-1 4 1.793 1.793-4.793 4.793v-4.5859h-2v8h8v-2h-4.5859l4.793-4.793 1.793 1.793v-5h-5z" fill="#cea4f1" fill-rule="evenodd"/></svg>
+ Tween
+        <label for="filter-node_types-general"
+               class="tag-pill -floatright -general">general</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Animates the properties of any node from code, procedurally.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Simple animations, like fading a UI element in</li><li>Animating anything when you don't know the start and end points in advance</li> </ul>
+      <a class="button-link" href="Tween/Tween.html">Go to guide</a>
+    </div>
+    
+<div class="node-card Viewport general action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 2;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m3 2c-.5304.0000801-1.0391.21085-1.4141.58594-.37509.37501-.58586.88366-.58594 1.4141v8c.0000803.5304.21085 1.0391.58594 1.4141.37501.37509.88366.58586 1.4141.58594h10c1.1046 0 2-.89543 2-2v-8c0-1.1046-.89543-2-2-2zm0 1h10c.55228.0000096.99999.44772 1 1v8c-.00001.55228-.44772.99999-1 1h-10c-.55228-.00001-.99999-.44772-1-1v-8c.0000096-.55228.44772-.99999 1-1z" fill="#e0e0e0" fill-opacity=".99608"/></svg>
+ Viewport
+        <label for="filter-node_types-general"
+               class="tag-pill -floatright -general">general</label>
+        </label>
+        <span class="learning-order">learn order: 2</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Draws its children to a texture, allowing you to separate them from the rest of the game world.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Magic portals through which you see other parts of the game world</li><li>Taking screenshots</li><li>Drawing UI or name tags over 3D characters</li> </ul>
+      <a class="button-link" href="Viewport/Viewport.html">Go to guide</a>
+    </div>
+    
+<div class="node-card VisibilityNotifier three_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m12 1v6h2v-6zm-4 2c-2.5567 0-5.7907 1.9477-6.9551 5.7051a1.0001 1.0001 0 0 0 -.0058594.57031c1.1244 3.9354 4.4609 5.7246 6.9609 5.7246 1.4907 0 3.2717-.65207 4.7109-2h-.71094-2v-.54102a4 4 0 0 1 -2 .54102 4 4 0 0 1 -4-4 4 4 0 0 1 4-4 4 4 0 0 1 2 .54102v-2.1816c-.68312-.23834-1.3644-.35938-2-.35938zm0 4a2 2 0 0 0 -2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0 -2-2zm4 2v2h2v-2z" fill="#fc7f7f" fill-opacity=".99608" fill-rule="evenodd"/></svg>
+ VisibilityNotifier
+        <label for="filter-node_types-three_dimensional"
+               class="tag-pill -floatright -threedimensional">3D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Detecting when something is visible in 3D.</p>
+      <h3>Use cases</h3>
+      <ul> <li>Making enemies use different attacks when out of sight.</li><li>Telling the player where something they can't see is.</li><li>Improving performance by disabling hidden Nodes.</li> </ul>
+      <a class="button-link" href="VisibilityNotifier/VisibilityNotifier.html">Go to guide</a>
+    </div>
+    
+<div class="node-card VisibilityNotifier2D two_dimensional action arcade puzzle racing rpg shooter simulation sport strategy platform" style="--order: 1;">
+      <h2><svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m12 1v6h2v-6zm-4 2c-2.5567 0-5.7907 1.9477-6.9551 5.7051a1.0001 1.0001 0 0 0 -.0058594.57031c1.1244 3.9354 4.4609 5.7246 6.9609 5.7246 1.4907 0 3.2717-.65207 4.7109-2h-.71094-2v-.54102a4 4 0 0 1 -2 .54102 4 4 0 0 1 -4-4 4 4 0 0 1 4-4 4 4 0 0 1 2 .54102v-2.1816c-.68312-.23834-1.3644-.35938-2-.35938zm0 4a2 2 0 0 0 -2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0 -2-2zm4 2v2h2v-2z" fill="#8da5f3" fill-rule="evenodd"/></svg>
+ VisibilityNotifier2D
+        <label for="filter-node_types-two_dimensional"
+               class="tag-pill -floatright -twodimensional">2D</label>
+        </label>
+        <span class="learning-order">learn order: 1</span>
+      </h2>
+      <details>
+          <summary class="genres-summary">Game genres</summary>
+          <div class="pills-row">
+              <label for="filter-game_genres-action" class="tag-pill -action">action</label><label for="filter-game_genres-arcade" class="tag-pill -arcade">arcade</label><label for="filter-game_genres-puzzle" class="tag-pill -puzzle">puzzle</label><label for="filter-game_genres-racing" class="tag-pill -racing">racing</label><label for="filter-game_genres-rpg" class="tag-pill -rpg">RPG</label><label for="filter-game_genres-shooter" class="tag-pill -shooter">shooter</label><label for="filter-game_genres-simulation" class="tag-pill -simulation">simulation</label><label for="filter-game_genres-sport" class="tag-pill -sport">sport</label><label for="filter-game_genres-strategy" class="tag-pill -strategy">strategy</label><label for="filter-game_genres-platform" class="tag-pill -platform">platform</label>
+          </div>
+      </details>
+      <p>Notifies when something is on the screen</p>
+      <h3>Use cases</h3>
+      <ul> <li>Delete bullets that go off-screen</li><li>Apply damage to all visible enemies</li><li>Enable behavior on visible objects</li><li>Trigger dialogues to warn about visible hazards</li> </ul>
+      <a class="button-link" href="VisibilityNotifier2D/VisibilityNotifier2D.html">Go to guide</a>
+    </div>
+    </div>
+        </div>
+</body>
+<script>
+var augment_radio_buttons = (radio_class, value_for_main) => {
+  const unselect = (evt) => {
+    const radio = document.getElementById(evt.target.htmlFor)
+    const group = radio.name
+    if(radio.checked){
+      document.querySelector(`input[name="${group}"][value="all"]`).checked = true
+      evt.preventDefault()
+    }
+  }
+  const selector = '.' + radio_class
+  document.querySelectorAll(selector).forEach(el=>{
+    if(el.innerText.toLowerCase() === value_for_main){
+      el.style.display = "none"
+    }else{
+      el.addEventListener("click", unselect)
+    }
+  })
+}
+augment_radio_buttons("radio-button", "all")
+</script>
+</html>

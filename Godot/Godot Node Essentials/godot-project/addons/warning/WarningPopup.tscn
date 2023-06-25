@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/warning/WarningPopup.gd" type="Script" id=1]
+[ext_resource path="res://common/UI/ui_theme.tres" type="Theme" id=2]
+
+[node name="ConfirmationDialog" type="ConfirmationDialog"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -300.0
+margin_top = -231.0
+margin_right = 300.0
+margin_bottom = 231.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 600, 460 )
+theme = ExtResource( 2 )
+popup_exclusive = true
+window_title = "Warning"
+resizable = true
+dialog_text = "You need Godot 3.5 to open the latest version of Godot Node Essentials in Godot due to a change in the engine. Please download the latest version on the godotengine.org website."
+dialog_autowrap = true
+script = ExtResource( 1 )
+
+[connection signal="confirmed" from="." to="." method="_on_ConfirmationDialog_confirmed"]
