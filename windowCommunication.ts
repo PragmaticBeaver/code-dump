@@ -1,3 +1,9 @@
+/**
+ * iframe communication utility
+ * Enables a simple and streamlined communication between iframe and parent using the window.postMessage sytax.
+ */
+
+
 // ToDo:
 // import uuidv4 from "uuid/v4";
 
