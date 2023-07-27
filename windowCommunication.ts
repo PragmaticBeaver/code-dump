@@ -45,7 +45,7 @@ export async function subscribe(
     callback: (args?: any) => Promise<any>): Promise<void> {
 
     target.addEventListener("message", async (event) => {
-        return new Promise(async (resolve, reject) => {
+        return new Promise<void>(async (resolve, reject) => {
             const syncMessage: ISyncMessage = JSON.parse(event.data);
             if (syncMessage.key !== messageKey) {
                 return;
