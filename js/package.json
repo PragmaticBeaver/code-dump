@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "dev": "http-server -o /webAudioApi.html"
+  },
   "devDependencies": {
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
+    "http-server": "^14.1.1",
     "prettier": "^3.0.0",
     "stylelint": "^15.10.2",
     "stylelint-config-recess-order": "^4.3.0",
