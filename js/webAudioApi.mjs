@@ -88,3 +88,60 @@ devButton.addEventListener("click", () => {
  * Use a single GainNode and connect each source to the single input to the GainNode.
  * This will sum up all of the different connections and produce a single output.
  */
+
+/**
+ * multi input
+ */
+
+const multiAudioContext = new AudioContext();
+
+const audioElementOne = document.getElementById("multiInputAudioOne");
+const audioOneSource =
+  multiAudioContext.createMediaElementSource(audioElementOne);
+
+const audioElementTwo = document.getElementById("multiInputAudioTwo");
+const audioTwoSource =
+  multiAudioContext.createMediaElementSource(audioElementTwo);
+
+const audioElementThree = document.getElementById("multiInputAudioThree");
+const audioThreeSource =
+  multiAudioContext.createMediaElementSource(audioElementThree);
+
+const multiInputGainNode = multiAudioContext.createGain();
+const multiInputVolumeControl = document.getElementById(
+  "multiInputVolumeInput"
+);
+multiInputVolumeControl.addEventListener("input", () => {
+  multiInputGainNode.gain.value = multiInputVolumeControl.value;
+});
+
+const multiInputButton = document.getElementById("multiInputPlayPauseButton");
+multiInputButton.addEventListener("click", () => {
+  // Check if context is in suspended state (autoplay policy)
+  if (multiAudioContext.state === "suspended") {
+    multiAudioContext.resume();
+  }
+  // Play or pause track depending on state
+  if (multiInputButton.dataset.playing === "false") {
+    audioElementOne.play();
+    audioElementTwo.play();
+    audioElementThree.play();
+    multiInputButton.dataset.playing = "true";
+  } else if (multiInputButton.dataset.playing === "true") {
+    audioElementOne.pause();
+    audioElementTwo.pause();
+    audioElementThree.pause();
+    multiInputButton.dataset.playing = "false";
+  }
+});
+
+const mergerNode = multiAudioContext.createChannelMerger();
+// connect sources to merger
+audioOneSource.connect(mergerNode);
+audioTwoSource.connect(mergerNode);
+audioThreeSource.connect(mergerNode);
+
+audioOneSource
+  .connect(mergerNode)
+  .connect(multiInputGainNode) // gain last (contols global volume)
+  .connect(multiAudioContext.destination);
