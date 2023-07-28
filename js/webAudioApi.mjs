@@ -52,4 +52,39 @@ testSongAudioElement.addEventListener("ended", () => {
 
 // alternative => new GainNode()
 const gainNode = audioContext.createGain();
-trackSourceNode.connect(gainNode).connect(audioContext.destination);
+// trackSourceNode.connect(gainNode).connect(audioContext.destination); // see below (modification nodes before the destination)
+
+const volumeControl = document.getElementById("volumeInput");
+volumeControl.addEventListener("input", () => {
+  gainNode.gain.value = volumeControl.value; // allow user to change gain
+});
+
+/**
+ * stereo panning
+ */
+const pannerOptions = { pan: 0 };
+const panner = audioContext.createStereoPanner();
+panner.pannerOptions = pannerOptions;
+// new StereoPannerNode(audioContext, pannerOptions);
+
+const pannerControl = document.getElementById("pannerInput");
+pannerControl.addEventListener("input", () => {
+  panner.pan.value = pannerControl.value;
+});
+
+trackSourceNode
+  .connect(gainNode)
+  .connect(panner)
+  .connect(audioContext.destination);
+
+const devButton = document.getElementById("devButton");
+devButton.addEventListener("click", () => {
+  console.log({ inputs: trackSourceNode.numberOfInputs });
+});
+
+/**
+ * todo
+ * You almost got it right.
+ * Use a single GainNode and connect each source to the single input to the GainNode.
+ * This will sum up all of the different connections and produce a single output.
+ */
