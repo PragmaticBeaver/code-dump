@@ -30,7 +30,8 @@ initBtn.addEventListener("click", (event) => {
    * ==> init receiver code <==
    */
 
-  receiverAudioContext = new AudioContext();
+  receiverAudioContext = new (window.AudioContext ||
+    window.webkitAudioContext)();
 
   /**
    * ==> init sender code <==
@@ -50,14 +51,16 @@ initBtn.addEventListener("click", (event) => {
   audioSourceNode.connect(streamDestination);
   mediaRec = new MediaRecorder(streamDestination.stream);
 
-  mediaRec.ondataavailable = async (event) => {
-    console.log("ondataavailable", event.data);
-    socket.emit("audio", event.data);
-  };
+  mediaRec.addEventListener("dataavailable", (event) => {
+    console.log("dataavailable", event.data);
+    if (event.data.size > 0) {
+      socket.emit("audio", event.data); // sent blob
+    }
+  });
 
-  mediaRec.onstop = (event) => {
+  mediaRec.addEventListener("stop", () => {
     console.log("onstop", event);
-  };
+  });
 });
 
 const startBtn = document.getElementById("startBtn");
