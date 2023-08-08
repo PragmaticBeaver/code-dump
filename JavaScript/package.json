@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "http-server -o /webAudioApi.html"
+    "dev": "http-server -o /web-audio-api/webAudioApi.html -a localhost -p 3000",
+    "dev-stream": "http-server -o /web-audio-api/streamFromServer.html -a localhost -p 3000"
   },
   "devDependencies": {
     "eslint-config-prettier": "^8.8.0",

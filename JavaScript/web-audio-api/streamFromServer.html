@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stream from server</title>
+  </head>
+  <body>
+    <div style="display: flex; flex-direction: column; gap: 25px">
+      <h1>Stream from Server</h1>
+      <!-- <input type="file" multiple id="musicInput" accept="audio/mp3" /> -->
+      <audio id="audioSource" src="./assets/testSong.mp3" controls></audio>
+      <div style="display: flex; flex-direction: row; gap: 10px">
+        <button id="initBtn">init</button>
+        <button id="startBtn">Start</button>
+        <button id="pauseBtn">Pause</button>
+        <button id="stopBtn">Stop</button>
+      </div>
+      <audio id="audioReceiver"></audio>
+    </div>
+  </body>
+  <footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="./streamFromServer.js"></script>
+  </footer>
+</html>
