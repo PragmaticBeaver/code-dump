@@ -8,15 +8,53 @@ let receiverAudioContext = undefined; // for receiving audio blobs
 const socket = io("http://localhost:4000");
 socket.on("audio", async (audioData) => {
   console.log("received - audio", audioData);
-  const blob = new Blob([audioData]);
-  const buffer = await blob.arrayBuffer();
 
-  receiverAudioContext.decodeAudioData(buffer, (decodedData) => {
-    const source = receiverAudioContext.createBufferSource();
-    source.buffer = decodedData;
-    source.connect(receiverAudioContext.destination);
-    source.start();
-  });
+  // todo from stack overflow, could work? https://stackoverflow.com/questions/70002015/streaming-into-audio-element
+  // const ws = new window.WebSocket(url);
+  // ws.onmessage = (_) => {
+  //   console.log("Media source not ready yet... discard this package");
+  // };
+
+  // const mediaSource = new window.MediaSource();
+  // const audio = document.createElement("audio");
+  // audio.src = window.URL.createObjectURL(mediaSource);
+  // audio.controls = true;
+  // document.body.appendChild(audio);
+
+  // mediaSource.onsourceopen = (_) => {
+  //   const sourceBuffer = mediaSource.addSourceBuffer("audio/mpeg"); // mpeg appears to not work in Firefox, unfortunately :(
+  //   ws.onmessage = (e) => {
+  //     const soundDataBase64 = JSON.parse(e.data);
+  //     const bytes = window.atob(soundDataBase64);
+  //     const arrayBuffer = new window.ArrayBuffer(bytes.length);
+  //     const bufferView = new window.Uint8Array(arrayBuffer);
+  //     for (let i = 0; i < bytes.length; i++) {
+  //       bufferView[i] = bytes.charCodeAt(i);
+  //     }
+  //     sourceBuffer.appendBuffer(arrayBuffer);
+  //   };
+  // };
+
+  async function playAudio(audioData) {
+    // Play using the Web Audio API
+    const audioBuffer = receiverAudioContext.createBuffer(
+      1,
+      receiverAudioContext.sampleRate * 0.25, // length = sampleRate * seconds since last Blob
+      receiverAudioContext.sampleRate
+    );
+    console.log({ audioBuffer });
+
+    // Play using the Audio element
+    const audioBlob = new Blob([audioData], { type: "audio/wav" });
+    console.log({ audioBlob });
+    const audioUrl = URL.createObjectURL(audioBlob);
+    console.log({ audioUrl });
+    audioReceiverElement.setAttribute("src", audioUrl);
+    console.log({ audioReceiverElement });
+    await audioReceiverElement.play();
+    console.log("hello");
+  }
+  await playAudio(audioData);
 });
 socket.on("test-back", (data) => {
   console.log("test-back", data);
@@ -51,11 +89,9 @@ initBtn.addEventListener("click", (event) => {
   audioSourceNode.connect(streamDestination);
   mediaRec = new MediaRecorder(streamDestination.stream);
 
-  mediaRec.addEventListener("dataavailable", (event) => {
+  mediaRec.addEventListener("dataavailable", async (event) => {
     console.log("dataavailable", event.data);
-    if (event.data.size > 0) {
-      socket.emit("audio", event.data); // sent blob
-    }
+    socket.emit("audio", event.data);
   });
 
   mediaRec.addEventListener("stop", () => {
