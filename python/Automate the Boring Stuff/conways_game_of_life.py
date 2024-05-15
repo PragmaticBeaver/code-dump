@@ -64,10 +64,16 @@ def run():
                 if current_cells[right_coord][below_coord] == LIFE_SYMBOL:
                     neighbors_count += 1
 
-                if current_cells[x][y] == LIFE_SYMBOL and (neighbors_count == 2 or neighbors_count == 3):
-                    next_cells[x][y] = LIFE_SYMBOL  # alive cell with 2 or 3 neighbors will live on
+                if current_cells[x][y] == LIFE_SYMBOL and (
+                    neighbors_count == 2 or neighbors_count == 3
+                ):
+                    next_cells[x][y] = (
+                        LIFE_SYMBOL  # alive cell with 2 or 3 neighbors will live on
+                    )
                 elif current_cells[x][y] == EMPTY_SYMBOL and neighbors_count == 3:
-                    next_cells[x][y] = LIFE_SYMBOL  # dead cell with 3 neighbors will resurrect
+                    next_cells[x][y] = (
+                        LIFE_SYMBOL  # dead cell with 3 neighbors will resurrect
+                    )
                 else:
                     next_cells[x][y] = EMPTY_SYMBOL
         time.sleep(1)

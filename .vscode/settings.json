@@ -1,12 +1,26 @@
 {
-  "editor.formatOnSave": true,
-  "files.autoSave": "onWindowChange",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.fixAll.stylelint": "explicit"
-  },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "git.ignoreLimitWarning": true,
-  "editor.tabSize": 2,
-  "eslint.runtime": "node"
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "files.autoSave": "onWindowChange",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.fixAll.stylelint": "explicit"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "eslint.runtime": "node",
+  },
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always"
+    }
+  },
+  "files.exclude": {
+    "**/__pycache__": true
+  },
+  "ruff.lint.run": "onSave"
 }
