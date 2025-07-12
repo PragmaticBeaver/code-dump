@@ -1,0 +1,41 @@
+body {
+  margin: 0px;
+}
+
+.one-ui {
+  background-color: aqua;
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  border-radius: 5%;
+}
+
+.status-bar {
+  background: rgba(167,199,203,0.5);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-grow: 1;
+  height: 5vh;
+}
+
+.status-bar-cam {
+  flex-grow: 4
+}
+
+.status-bar-connectivity {
+  display: flex;
+  flex: row;
+  gap: 5px;
+}
+
+.status-bar-text {
+  font-size: large;
+}
+
+.svg-container {
+  width: 25px;
+  padding: 0;
+  margin: 0;
+}
